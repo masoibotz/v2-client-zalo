@@ -15,7 +15,7 @@ class ZaloBot {
     }
     sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
         this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-            ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': response.data.imageId }, function (response) {
+            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': response.data.imageId }, function (response) {
                 console.log(response);
             })
         })

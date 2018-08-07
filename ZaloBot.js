@@ -1,5 +1,4 @@
 var ZaloOA = require('zalo-sdk').ZaloOA;
-var ZOAClient = new ZaloOA(zaConfig);
 
 class ZaloBot {
     constructor() {

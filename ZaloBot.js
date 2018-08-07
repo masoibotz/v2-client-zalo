@@ -48,6 +48,7 @@ class ZaloBot {
     getProfile(userId) {
         this.ZOAClient.api('getprofile', { uid: userId }, function (response) {
             console.log(response.data);
+            console.log(response.data.displayName);
             return response.data;
         })
     }

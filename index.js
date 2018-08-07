@@ -64,6 +64,9 @@ app.get('/webhook/', function (req, res) {
             image: 'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/37812890_1872137736415276_2253761986674294784_n.png?_nc_cat=0&oh=c66c9db1a9e5d72edb88931cadeff204&oe=5C07D275',
           });
           break;
+        case '#leave':
+          bot.sendActionList(joinID);
+          break;
       }
   }
   res.sendStatus(200);

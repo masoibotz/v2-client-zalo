@@ -20,6 +20,28 @@ class ZaloBot {
             })
         }.bind(this))
     }
+    sendActionList(recipientId) {
+        var params = {
+            uid: recipientId,
+            actionlist: [{
+                action: 'oa.open.inapp',
+                title: 'Send interactive messages',
+                description: 'This is a test for API send interactive messages',
+                thumb: 'https://developers.zalo.me/web/static/images/bg.jpg',
+                href: 'https://developers.zalo.me',
+                data: 'https://developers.zalo.me',
+                popup: {
+                    title: 'Open Website Zalo For Developers',
+                    desc: 'Click ok to visit Zalo For Developers and read more Document',
+                    ok: 'ok',
+                    cancel: 'cancel'
+                }
+            }]
+        }
+        this.ZOAClient.api('sendmessage/actionlist', 'POST', params, function (response) {
+            console.log(response);
+        })
+    }
     say(recipientId, message) {
         if (typeof message === 'string') {
             return this.sendTextMessage(recipientId, message);

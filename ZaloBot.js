@@ -18,7 +18,7 @@ class ZaloBot {
             this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': response.data.imageId }, function (response) {
                 console.log(response);
             })
-        })
+        }.bind(this))
     }
     say(recipientId, message) {
         if (typeof message === 'string') {

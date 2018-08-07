@@ -28,10 +28,10 @@ module.exports = (gamef, bot, joinID, roomNumberTxt) => {
                 first_name: joinUser.displayName,
                 avatar: joinUser.avatar
             }));
-            console.log(`$ ROOM ${(roomID + 1)} > JOIN > ${joinUser.first_name} > ${joinID}`);
+            // notice new player to everyone in room
+            let playerListView = gamef.getSimpleRoomPlayerView(roomID).join(`\n`);
+            roomChatAll(bot, gamef.getRoom(roomID).players, 0, playerListView);
+            console.log(`$ ROOM ${(roomID + 1)} > JOIN > ${joinUser.displayName} > ${joinID}`);
         });
-        // notice new player to everyone in room
-        let playerListView = gamef.getSimpleRoomPlayerView(roomID).join(`\n`);
-        roomChatAll(bot, gamef.getRoom(roomID).players, 0, playerListView);
     }
 };

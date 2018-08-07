@@ -56,7 +56,8 @@ app.get('/webhook/', function (req, res) {
       let joinID = req.query.fromuid;
       switch (message) {
         case '#join':
-          bot.say(joinID, `Chào mừng bạn đến với Phạm Ngọc Duy Game Bot!`);
+          let pro = bot.getProfile(joinID);
+          bot.say(joinID, `Chào mừng bạn đến với Phạm Ngọc Duy Game Bot! ${JSON.stringify(pro)}`);
           break;
         case '#ready':
           bot.say(joinID, {
@@ -68,6 +69,12 @@ app.get('/webhook/', function (req, res) {
           bot.sendActionList(joinID);
           break;
       }
+      break;
+    case 'sendstickermsg':
+      let message = req.query.message;
+      let joinID = req.query.fromuid;
+      bot.say(joinID, `Đã nhận sticker!`);
+      break;
   }
   res.sendStatus(200);
 })

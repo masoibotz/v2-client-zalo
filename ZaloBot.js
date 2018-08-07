@@ -25,7 +25,7 @@ class ZaloBot {
             return this.sendTextMessage(recipientId, message);
         } else {
             if (message.image && message.text) {
-                return this.sendImageMessage(recipientId, message.url, message.text)
+                return this.sendImageMessage(recipientId, message.image, message.text)
             }
         }
         console.error('Invalid format for .say() message.');

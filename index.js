@@ -3,13 +3,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 var schedule = require('node-schedule')
-var ZaloOA = require('zalo-sdk').ZaloOA;
- 
-var zaConfig = {
-    oaid: '3143856013449793558',
-    secretkey: '0DHbJHF76STPd6D2cMd4'
-}
-var ZOAClient = new ZaloOA(zaConfig);
+var ZaloBot = require('./ZaloBot');
 
 const { Game, Room, Player } = require('./src/MainGame/Game.js');
 
@@ -26,6 +20,7 @@ const chatAndVote = require('./src/Chat/Chat');
 const adminCMD = require('./src/Menu/Admin');
 
 const gamef = new Game();
+const bot = new ZaloBot();
 
 // **** BOT MODULE ****
 // setup GreetingText / GetStartedButton / PersistentMenu
@@ -58,32 +53,22 @@ app.get('/webhook/', function (req, res) {
   switch (req.query.event) {
     case 'sendmsg':
       let message = req.query.message;
+      let joinID = req.query.fromuid;
       switch (message) {
-        case 'hello':
-          replyMessage(req.query.fromuid, 'Chào mừng bạn đến với Phạm Ngọc Duy Bot!');
+        case '#join':
+          bot.say(joinID, `Chào mừng bạn đến với Phạm Ngọc Duy Game Bot!`);
           break;
-        case 'image':
-          replyImage(req.query.fromuid, 'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/37812890_1872137736415276_2253761986674294784_n.png?_nc_cat=0&oh=c66c9db1a9e5d72edb88931cadeff204&oe=5C07D275');
+        case '#ready':
+          bot.say(joinID, {
+            text: 'Ma sói bot image',
+            image: 'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/37812890_1872137736415276_2253761986674294784_n.png?_nc_cat=0&oh=c66c9db1a9e5d72edb88931cadeff204&oe=5C07D275',
+          });
           break;
       }
   }
   res.sendStatus(200);
 })
 
-function replyMessage(joinID, messageTxt) {
-  ZOAClient.api('sendmessage/text', 'POST', { uid: joinID, message: messageTxt }, function (response) {
-    console.log(response);
-  })
-}
-
-function replyImage(joinID, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
-  ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-    ZOAClient.api('sendmessage/image', 'POST', { uid: joinID, message: messageTxt, 'imageid': response.data.imageId }, function (response) {
-      console.log(response);
-    })
-  })
-}
-
 app.listen(app.get('port'), function () {
-  console.log('Started on port', app.get('port'))
+  console.log('Zalo bot started on port', app.get('port'))
 })

@@ -5,5 +5,5 @@ module.exports = (gamef, bot, joinID) => {
         return;
     }
     let roomListView = gamef.getRoomListView();
-    bot.say(joinID, `Danh sách phòng:\n${roomListView.join(" ; ")}\n/join <id> để tham gia`);
+    bot.say(joinID, `Danh sách phòng:\n${roomListView.join(" ; ")}\n#join 1 để tham gia phòng 1`);
 };

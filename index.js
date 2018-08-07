@@ -55,7 +55,10 @@ app.get('/webhook/', function (req, res) {
   let joinID = req.query.fromuid;
   switch (req.query.event) {
     case 'sendmsg':
-      route(gamef, bot, joinID, message);
+      if (!route(gamef, bot, joinID, message)){
+        chatAndVote(gamef, bot, joinID, message);
+      }
+      
       // switch (message) {
       //   case '#join':
       //     let pro = bot.getProfile(joinID);

@@ -554,7 +554,7 @@ class Game {
         let playerListView = [];
         // create message
         this.room[roomID].players.forEach(m => {
-            playerListView.push(`${m.id + 1}: (${m.first_name} ${m.ready ? 'SS' : 'C'})`);
+            playerListView.push(`${m.id + 1}: ${m.first_name}(${m.ready ? 'OK' : '💤'})`);
         });
         return playerListView;
     }

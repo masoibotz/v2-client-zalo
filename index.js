@@ -21,11 +21,11 @@ const adminCMD = require('./src/Menu/Admin');
 
 const gamef = new Game();
 var zsConfig = {
-  appId: '1131677296116040198',
+  appId: '3143856013449793558',
   redirectUri: 'http://localhost/login/zalo-callback',
-  secretkey: 'your app secret'
+  secretkey: '0DHbJHF76STPd6D2cMd4'
 };
-var ZSClient = new ZaloSocial(zsConfig);
+var ZOAClient = new ZaloSocial(zsConfig);
 
 // **** BOT MODULE ****
 // setup GreetingText / GetStartedButton / PersistentMenu

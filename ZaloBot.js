@@ -46,11 +46,12 @@ class ZaloBot {
         })
     }
     getProfile(userId) {
+        let ret;
         this.ZOAClient.api('getprofile', { uid: userId }, function (response) {
-            console.log(response.data);
-            console.log(response.data.displayName);
-            return response.data;
-        })
+            //console.log(response.data);
+            ret = response.data;
+        });
+        return ret;
     }
     say(recipientId, message) {
         if (typeof message === 'string') {

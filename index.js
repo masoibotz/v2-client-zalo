@@ -50,10 +50,10 @@ app.use(bodyParser.json())
 
 app.get('/webhook/', function (req, res) {
   console.log(req.query);
+  let message = req.query.message;
+  let joinID = req.query.fromuid;
   switch (req.query.event) {
     case 'sendmsg':
-      let message = req.query.message;
-      let joinID = req.query.fromuid;
       switch (message) {
         case '#join':
           let pro = bot.getProfile(joinID);
@@ -71,8 +71,6 @@ app.get('/webhook/', function (req, res) {
       }
       break;
     case 'sendstickermsg':
-      let message = req.query.message;
-      let joinID = req.query.fromuid;
       bot.say(joinID, `Đã nhận sticker!`);
       break;
   }

@@ -550,6 +550,14 @@ class Game {
         });
         return playerListView;
     }
+    getSimpleRoomPlayerView(roomID) {
+        let playerListView = [];
+        // create message
+        this.room[roomID].players.forEach(m => {
+            playerListView.push(`${m.id + 1}: (${m.first_name} ${m.ready ? 'SS' : 'C'})`);
+        });
+        return playerListView;
+    }
     gameIsReady(roomID, callback) {
         let gameReady = true;
         if (this.room[roomID].players.length >= this.MIN_PLAYER) {

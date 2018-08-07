@@ -8,7 +8,8 @@ var ZaloBot = require('./ZaloBot');
 const { Game, Room, Player } = require('./src/MainGame/Game.js');
 
 //module import
-const botSetup = require('./src/botSetup');
+const route = require('./route');
+
 const menuTienIch = require('./src/Menu/TienIch');
 const menuHelp = require('./src/Menu/Help');
 const attachmentChat = require('./src/Chat/AttachmentChat');
@@ -54,21 +55,22 @@ app.get('/webhook/', function (req, res) {
   let joinID = req.query.fromuid;
   switch (req.query.event) {
     case 'sendmsg':
-      switch (message) {
-        case '#join':
-          let pro = bot.getProfile(joinID);
-          bot.say(joinID, `Chào mừng bạn đến với Phạm Ngọc Duy Game Bot! ${JSON.stringify(pro)}`);
-          break;
-        case '#ready':
-          bot.say(joinID, {
-            text: 'Ma sói bot image',
-            image: 'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/37812890_1872137736415276_2253761986674294784_n.png?_nc_cat=0&oh=c66c9db1a9e5d72edb88931cadeff204&oe=5C07D275',
-          });
-          break;
-        case '#leave':
-          bot.sendActionList(joinID);
-          break;
-      }
+      route(gamef, bot, joinID, message);
+      // switch (message) {
+      //   case '#join':
+      //     let pro = bot.getProfile(joinID);
+      //     bot.say(joinID, `Chào mừng bạn đến với Phạm Ngọc Duy Game Bot! ${JSON.stringify(pro)}`);
+      //     break;
+      //   case '#ready':
+      //     bot.say(joinID, {
+      //       text: 'Ma sói bot image',
+      //       image: 'https://scontent.fsgn2-1.fna.fbcdn.net/v/t1.0-9/37812890_1872137736415276_2253761986674294784_n.png?_nc_cat=0&oh=c66c9db1a9e5d72edb88931cadeff204&oe=5C07D275',
+      //     });
+      //     break;
+      //   case '#leave':
+      //     bot.sendActionList(joinID);
+      //     break;
+      // }
       break;
     case 'sendstickermsg':
       bot.say(joinID, `Đã nhận sticker!`);

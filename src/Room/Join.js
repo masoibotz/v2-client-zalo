@@ -15,7 +15,7 @@ module.exports = (gamef, bot, joinID, roomNumberTxt) => {
     let roomID = parseInt(roomNumberTxt) - 1;
 
     if (gamef.getRoom(roomID).ingame) {
-        convo.say(`Phòng đã vào chơi rồi! Bạn sẽ được thông báo khi trò chơi kết thúc!`);
+        bot.say(joinID, `Phòng đã vào chơi rồi! Bạn sẽ được thông báo khi trò chơi kết thúc!`);
         gamef.getRoom(roomID).subscribe(joinID);
     } else {
         // save room number for user
@@ -24,17 +24,15 @@ module.exports = (gamef, bot, joinID, roomNumberTxt) => {
         gamef.getRoom(roomID).addPlayer(new Player({
             id: gamef.getRoom(roomID).newPlayerID(),
             joinID: joinID,
-            last_name: joinUser.last_name,
-            first_name: joinUser.first_name,
-            avatar: joinUser.profile_pic
+            last_name: '',
+            first_name: joinUser.displayName,
+            avatar: joinUser.avatar
         }));
 
         // notice new player to everyone in room
-        let playerListView = gamef.getRoomPlayerView(roomID);
-        roomChatAll(bot, gamef.getRoom(roomID).players, 0, [{
-            cards: playerListView
-        }, `${joinUser.first_name} đã tham gia phòng!`]);
-        
+        let playerListView = gamef.getSimpleRoomPlayerView(roomID).join(`\n`);
+        roomChatAll(bot, gamef.getRoom(roomID).players, 0, playerListView);
+
         console.log(`$ ROOM ${(roomID + 1)} > JOIN > ${joinUser.first_name} > ${joinID}`);
     }
 };

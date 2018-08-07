@@ -10,17 +10,18 @@ class ZaloBot {
     }
     sendTextMessage(recipientId, messageTxt) {
         this.ZOAClient.api('sendmessage/text', 'POST', { uid: recipientId, message: messageTxt }, function (response) {
-            console.log(response);
+            console.log(response.errorMsg);
         })
     }
     sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
-        this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-            console.log(response.data);
-            console.log('*********************************');
-            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': response.data.imageId }, function (response) {
-                console.log(response);
+        // main logo ID: 222d2fdd2cdcc5829ccd
+        // this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
+            // console.log(response.data.imageId);
+            let imageid = '222d2fdd2cdcc5829ccd'; //response.data.imageId;
+            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
+                console.log(response.errorMsg);
             })
-        }.bind(this))
+        // }.bind(this))
     }
     sendActionList(recipientId) {
         var params = {
@@ -41,7 +42,7 @@ class ZaloBot {
             }]
         }
         this.ZOAClient.api('sendmessage/actionlist', 'POST', params, function (response) {
-            console.log(response);
+            console.log(response.errorMsg);
         })
     }
     say(recipientId, message) {

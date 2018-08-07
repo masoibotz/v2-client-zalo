@@ -77,6 +77,7 @@ app.get('/webhook/', function (req, res) {
       break;
     case 'sendstickermsg':
       bot.say(joinID, `Đã nhận sticker!`);
+      console.log(req.query);
       break;
   }
   res.sendStatus(200);

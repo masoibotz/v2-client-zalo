@@ -45,13 +45,11 @@ class ZaloBot {
             console.log(response.errorMsg);
         })
     }
-    getProfile(userId) {
-        let ret;
-        this.ZOAClient.api('getprofile', { uid: userId }, function (response) {
+    getProfile(recipientId, callback) {
+        this.ZOAClient.api('getprofile', { uid: recipientId }, function (response) {
             //console.log(response.data);
-            ret = response.data;
+            callback(response.data);
         });
-        return ret;
     }
     say(recipientId, message) {
         if (typeof message === 'string') {

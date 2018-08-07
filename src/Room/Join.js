@@ -7,7 +7,10 @@ module.exports = (gamef, bot, joinID, roomNumberTxt) => {
         bot.say(joinID, `Bạn đã tham gia phòng ${(userRoom + 1)} rồi!\nĐể rời phòng chơi, chọn menu Chơi > Rời/tự sát!`);
         return;
     }
-    let joinUser = bot.getProfile(joinID);
+    let joinUser;
+    bot.getProfile(joinID, (user) => {
+        joinUser = user;
+    });
     if (!roomNumberTxt || !gamef.room[parseInt(roomNumberTxt) - 1]) {
         bot.say(joinID, `Phòng bạn vừa nhập không hợp lệ!`);
         return;

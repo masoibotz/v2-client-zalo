@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/webhook/', function (req, res) {
-  console.log(req.query);
+  //console.log(req.query);
   let message = req.query.message;
   let joinID = req.query.fromuid;
   switch (req.query.event) {

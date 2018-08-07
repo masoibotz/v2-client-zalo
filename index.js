@@ -3,7 +3,13 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 var schedule = require('node-schedule')
-var ZaloSocial = require('zalo-sdk').ZaloSocial;
+var ZaloOA = require('zalo-sdk').ZaloOA;
+ 
+var zaConfig = {
+    oaid: '3143856013449793558',
+    secretkey: '0DHbJHF76STPd6D2cMd4'
+}
+var ZOAClient = new ZaloOA(zaConfig);
 
 const { Game, Room, Player } = require('./src/MainGame/Game.js');
 
@@ -20,12 +26,6 @@ const chatAndVote = require('./src/Chat/Chat');
 const adminCMD = require('./src/Menu/Admin');
 
 const gamef = new Game();
-var zsConfig = {
-  appId: '3143856013449793558',
-  redirectUri: 'http://localhost/login/zalo-callback',
-  secretkey: '0DHbJHF76STPd6D2cMd4'
-};
-var ZOAClient = new ZaloSocial(zsConfig);
 
 // **** BOT MODULE ****
 // setup GreetingText / GetStartedButton / PersistentMenu

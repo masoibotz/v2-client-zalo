@@ -15,13 +15,13 @@ class ZaloBot {
     }
     sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
         // main logo ID: 222d2fdd2cdcc5829ccd
-        // this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-        // console.log(response.data.imageId);
-        let imageid = '222d2fdd2cdcc5829ccd'; //response.data.imageId;
-        this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
-            console.log(response.errorMsg);
-        })
-        // }.bind(this))
+        this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
+            console.log(response.data.imageId);
+            let imageid = /*'222d2fdd2cdcc5829ccd'; */response.data.imageId;
+            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
+                console.log(response.errorMsg);
+            })
+        }.bind(this))
     }
     sendActionList(recipientId) {
         var params = {

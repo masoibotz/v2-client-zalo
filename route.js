@@ -24,10 +24,9 @@ module.exports = (gamef, bot, joinID, message) => {
         return true;
     } else if (message == 'upload') {
         bot.say(joinID, {
-            text: 'Ma sói',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/masoi.jpg'
+            text: 'tiên tri',
+            image:'http://hstatic.net/936/1000019936/10/2015/11-18/tien-tri.jpg'
         });
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/11-18/tien-tri.jpg');
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg');
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg');
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg');

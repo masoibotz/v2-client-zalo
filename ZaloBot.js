@@ -9,20 +9,32 @@ class ZaloBot {
         this.ZOAClient = new ZaloOA(zaConfig);
     }
     sendTextMessage(recipientId, messageTxt) {
-        this.ZOAClient.api('sendmessage/text', 'POST', { uid: recipientId, message: messageTxt }, function (response) {
-            console.log(response.errorMsg);
-        })
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('sendmessage/text', 'POST', { uid: recipientId, message: messageTxt }, response => {
+                if (response.errorMsg == 'Success') {
+                    resolve(response);
+                } else {
+                    reject(response);
+                }
+            });
+        });
     }
     sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
         // main logo ID: 222d2fdd2cdcc5829ccd
         // sói: 27fe82aa81ab68f531ba
-        this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-            console.log(response.data.imageId);
-            let imageid = /*'222d2fdd2cdcc5829ccd'; */response.data.imageId;
-            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
-                console.log(response.errorMsg);
-            })
-        }.bind(this))
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
+                console.log(response.data.imageId);
+                let imageid = /*'222d2fdd2cdcc5829ccd'; */response.data.imageId;
+                this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
+                    if (response.errorMsg == 'Success') {
+                        resolve(response);
+                    } else {
+                        reject(response);
+                    }
+                })
+            }.bind(this));
+        }
     }
     sendActionList(recipientId) {
         var params = {

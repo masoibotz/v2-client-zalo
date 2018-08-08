@@ -35,6 +35,9 @@ class ZaloBot {
         // main logo ID: 222d2fdd2cdcc5829ccd
         // sói: 27fe82aa81ab68f531ba
         // tiên tri: 9266265b5b5ab204eb4b
+        // thợ săn: 96f36f981299fbc7a288
+        // phản bội: 5e8da6e6dbe732b96bf6
+        // bảo vệ: c1f13a9a479baec5f78a
         let start = async () => {
             let imageid = await this.uploadImage(imgURL);
             return await new Promise((resolve, reject) => {

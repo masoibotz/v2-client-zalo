@@ -25,20 +25,20 @@ module.exports = (gamef, bot, joinID, message) => {
     } else if (message == 'upload') {
         bot.say(joinID, {
             text: 'bảo vệ',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg'
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/phuthuy.jpg'
         });
         bot.say(joinID, {
             text: 'thợ săn',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg'
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/gialang.jpg'
         });
         bot.say(joinID, {
             text: 'phản bội',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg'
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/cupid.jpg'
         });
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/phuthuy.jpg');
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/gialang.jpg');
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/cupid.jpg');
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/danlang.jpg');
+        bot.say(joinID, {
+            text: 'phản bội',
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/danlang.jpg'
+        });
     }
     return false;
 }

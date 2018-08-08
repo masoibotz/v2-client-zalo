@@ -23,6 +23,7 @@ class ZaloBot {
         return new Promise((resolve, reject) => {
             this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, response => {
                 if (response.errorMsg == 'Success') {
+                    console.log('imageID:'+response.data.imageId);
                     resolve(response.data.imageId);
                 } else {
                     reject(response);
@@ -46,7 +47,7 @@ class ZaloBot {
                 });
             });
         }
-        start();
+        return start();
     }
     sendActionList(recipientId) {
         var params = {

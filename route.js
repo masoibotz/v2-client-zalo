@@ -27,9 +27,14 @@ module.exports = (gamef, bot, joinID, message) => {
             text: 'bảo vệ',
             image:'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg'
         });
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg');
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg');
-        // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg');
+        bot.say(joinID, {
+            text: 'thợ săn',
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg'
+        });
+        bot.say(joinID, {
+            text: 'phản bội',
+            image:'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg'
+        });
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/phuthuy.jpg');
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/gialang.jpg');
         // bot.sendImageMessage(joinID, 'http://hstatic.net/936/1000019936/10/2015/7-28/cupid.jpg');

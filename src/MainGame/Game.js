@@ -475,7 +475,7 @@ class Game {
         this.room = [];
         this.userRoom = [];
         this.roleTxt = [];
-        this.MIN_PLAYER = 2;
+        this.MIN_PLAYER = 3;
         this.MAX_PER_PAGE = 4;
         this.resetAllRoom();
         this.setRoleTxt();
@@ -582,63 +582,62 @@ class Game {
         let len = this.room[roomID].players.length;
         let roleListTxt = "🎲1 TIÊN TRI, 1 BẢO VỆ";
         this.setRole(roomID, 1, 1); // 1 TIÊN TRI +7
-        this.setRole(roomID, -1, 1);  // 1 SÓI -6
-        // this.setRole(roomID, 2, 1); // 1 BẢO VỆ +3
-        // if (len < 6) { // 4,5
-        //     let villagersRemain = (len - 3), balance = 7 + 3 - 6 + (len - 3);
-        //     roleListTxt += `, 1 SÓI`;
-        //     this.setRole(roomID, -1, 1);  // 1 SÓI -6
-        //     // if (this.trueFalseRandom()) {
-        //     //     this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
-        //     //     roleListTxt += `, 1 GIÀ LÀNG`;
-        //     //     villagersRemain--; balance--;
-        //     // }
-        //     roleListTxt += `, ${villagersRemain} DÂN (CÂN BẰNG: ${balance})`;
-        // } else if (len < 8) { // 6,7
-        //     let villagersRemain = (len - 2), balance = 7 + 3;
-        //     // if (this.trueFalseRandom()) {
-        //         roleListTxt += ", 2 SÓI, 1 PHÙ THỦY";
-        //         this.setRole(roomID, -1, 2);  // 2 SÓI -6*2
-        //         this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
-        //         villagersRemain -= 3;
-        //         balance += -6 * 2 + 4 + villagersRemain;
-        //     // } else {
-        //     //     roleListTxt += ", 1 SÓI, 1 BÁN SÓI";
-        //     //     this.setRole(roomID, -1, 1);  // 1 SÓI -6
-        //     //     this.setRole(roomID, -2, 1); // 1 BÁN SÓI -3
-        //     //     villagersRemain -= 2;
-        //     //     balance += -6 - 3 + villagersRemain;
-        //     // }
-        //     roleListTxt += ', ' + villagersRemain + ` DÂN (CÂN BẰNG: ${balance})`;
-        // } else if (len < 10) { // 8,9
-        //     let villagersRemain = (len - 7), balance = 7 + 3 - 6 * 2 + 3 - 3 + 4 + (len - 7);
-        //     this.setRole(roomID, -1, 2);  // 2 SÓI -6*2
-        //     this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
-        //     this.setRole(roomID, -2, 1); // 1 BÁN SÓI -3
-        //     this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
-        //     roleListTxt += ", 2 SÓI, 1 THỢ SĂN, 1 BÁN SÓI, 1 PHÙ THỦY";
-        //     if (this.trueFalseRandom()) {
-        //         this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
-        //         roleListTxt += `, 1 THẦN TÌNH YÊU`;
-        //         villagersRemain--; balance += -1 - 3;
-        //     }
-        //     roleListTxt += `, ${villagersRemain} DÂN (CÂN BẰNG: ${balance})`;
-        // } else if (len < 12) { // 10,11
-        //     this.setRole(roomID, -1, 3);  // 3 SÓI -6*3
-        //     this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
-        //     this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
-        //     this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
-        //     this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
-        //     roleListTxt += ", 3 SÓI, 1 THỢ SĂN, 1 PHÙ THỦY, 1 GIÀ LÀNG, 1 THẦN TÌNH YÊU, " + (len - 9) + ` DÂN (CÂN BẰNG: ${7 + 3 - 6 * 3 + 3 + 4 + (len - 9) - 3})`;
-        // } else { //12,13,14,15
-        //     this.setRole(roomID, -1, 3);  // 2 SÓI - 6*2
-        //     this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
-        //     this.setRole(roomID, -2, 1); // 2 BÁN SÓI -3*2
-        //     this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
-        //     this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
-        //     this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
-        //     roleListTxt += ", 2 SÓI, 1 THỢ SĂN, 2 BÁN SÓI, 1 PHÙ THỦY, 1 GIÀ LÀNG, 1 THẦN TÌNH YÊU, " + (len - 10) + ` DÂN (CÂN BẰNG: ${7 + 3 - 6 * 2 + 3 - 3 * 2 + 4 + (len - 10) - 3})`;
-        // }
+        this.setRole(roomID, 2, 1); // 1 BẢO VỆ +3
+        if (len < 6) { // 4,5
+            let villagersRemain = (len - 3), balance = 7 + 3 - 6 + (len - 3);
+            roleListTxt += `, 1 SÓI`;
+            this.setRole(roomID, -1, 1);  // 1 SÓI -6
+            // if (this.trueFalseRandom()) {
+            //     this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
+            //     roleListTxt += `, 1 GIÀ LÀNG`;
+            //     villagersRemain--; balance--;
+            // }
+            roleListTxt += `, ${villagersRemain} DÂN (CÂN BẰNG: ${balance})`;
+        } else if (len < 8) { // 6,7
+            let villagersRemain = (len - 2), balance = 7 + 3;
+            // if (this.trueFalseRandom()) {
+                roleListTxt += ", 2 SÓI, 1 PHÙ THỦY";
+                this.setRole(roomID, -1, 2);  // 2 SÓI -6*2
+                this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
+                villagersRemain -= 3;
+                balance += -6 * 2 + 4 + villagersRemain;
+            // } else {
+            //     roleListTxt += ", 1 SÓI, 1 BÁN SÓI";
+            //     this.setRole(roomID, -1, 1);  // 1 SÓI -6
+            //     this.setRole(roomID, -2, 1); // 1 BÁN SÓI -3
+            //     villagersRemain -= 2;
+            //     balance += -6 - 3 + villagersRemain;
+            // }
+            roleListTxt += ', ' + villagersRemain + ` DÂN (CÂN BẰNG: ${balance})`;
+        } else if (len < 10) { // 8,9
+            let villagersRemain = (len - 7), balance = 7 + 3 - 6 * 2 + 3 - 3 + 4 + (len - 7);
+            this.setRole(roomID, -1, 2);  // 2 SÓI -6*2
+            this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
+            this.setRole(roomID, -2, 1); // 1 BÁN SÓI -3
+            this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
+            roleListTxt += ", 2 SÓI, 1 THỢ SĂN, 1 BÁN SÓI, 1 PHÙ THỦY";
+            if (this.trueFalseRandom()) {
+                this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
+                roleListTxt += `, 1 THẦN TÌNH YÊU`;
+                villagersRemain--; balance += -1 - 3;
+            }
+            roleListTxt += `, ${villagersRemain} DÂN (CÂN BẰNG: ${balance})`;
+        } else if (len < 12) { // 10,11
+            this.setRole(roomID, -1, 3);  // 3 SÓI -6*3
+            this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
+            this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
+            this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
+            this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
+            roleListTxt += ", 3 SÓI, 1 THỢ SĂN, 1 PHÙ THỦY, 1 GIÀ LÀNG, 1 THẦN TÌNH YÊU, " + (len - 9) + ` DÂN (CÂN BẰNG: ${7 + 3 - 6 * 3 + 3 + 4 + (len - 9) - 3})`;
+        } else { //12,13,14,15
+            this.setRole(roomID, -1, 3);  // 2 SÓI - 6*2
+            this.setRole(roomID, 3, 1);  // 1 THỢ SĂN +3
+            this.setRole(roomID, -2, 1); // 2 BÁN SÓI -3*2
+            this.setRole(roomID, 5, 1); // 1 PHÙ THỦY +4
+            this.setRole(roomID, 6, 1); // 1 GIÀ LÀNG +0
+            this.setRole(roomID, 7, 1); // THẦN TÌNH YÊU -3
+            roleListTxt += ", 2 SÓI, 1 THỢ SĂN, 2 BÁN SÓI, 1 PHÙ THỦY, 1 GIÀ LÀNG, 1 THẦN TÌNH YÊU, " + (len - 10) + ` DÂN (CÂN BẰNG: ${7 + 3 - 6 * 2 + 3 - 3 * 2 + 4 + (len - 10) - 3})`;
+        }
         this.room[roomID].playersTxt = [];
         this.room[roomID].players.forEach(p => {
             this.room[roomID].playersRole[p.joinID] = p.role;

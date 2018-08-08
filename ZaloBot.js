@@ -34,7 +34,7 @@ class ZaloBot {
                     }
                 })
             }.bind(this));
-        }
+        });
     }
     sendActionList(recipientId) {
         var params = {

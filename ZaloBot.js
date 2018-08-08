@@ -23,7 +23,7 @@ class ZaloBot {
         return new Promise((resolve, reject) => {
             this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, response => {
                 if (response.errorMsg == 'Success') {
-                    console.log('imageID:'+response.data.imageId);
+                    console.log(imgURL+' => ' + response.data.imageId);
                     resolve(response.data.imageId);
                 } else {
                     reject(response);
@@ -31,26 +31,28 @@ class ZaloBot {
             });
         });
     }
-    sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
+    sendImageMessage(recipientId, imageid, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
         // main logo ID: 222d2fdd2cdcc5829ccd
         // sói: 27fe82aa81ab68f531ba
         // tiên tri: 9266265b5b5ab204eb4b
         // thợ săn: 96f36f981299fbc7a288
         // phản bội: 5e8da6e6dbe732b96bf6
         // bảo vệ: c1f13a9a479baec5f78a
-        let start = async () => {
-            let imageid = await this.uploadImage(imgURL);
-            return await new Promise((resolve, reject) => {
-                this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
-                    if (response.errorMsg == 'Success') {
-                        resolve(response);
-                    } else {
-                        reject(response);
-                    }
-                });
+        // già làng: 77167a700771ee2fb760
+        // dân: 94359853e5520c0c5543
+        // phủ thủy: ff85f0e38de264bc3df3
+        // cupid: e0a8eece93cf7a9123de
+
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
+                if (response.errorMsg == 'Success') {
+                    resolve(response);
+                } else {
+                    reject(response);
+                }
             });
-        }
-        return start();
+        });
+
     }
     sendActionList(recipientId) {
         var params = {
@@ -84,10 +86,15 @@ class ZaloBot {
             return this.sendTextMessage(recipientId, message);
         } else {
             if (message.image && message.text) {
-                return this.sendImageMessage(recipientId, message.image, message.text)
+                let start = async () => {
+                    let imageid = await this.uploadImage(message.image);
+                    await this.sendImageMessage(recipientId, imageid, message.text);
+                }
+                start();
+            } else {
+                console.error('Invalid format for .say() message.');
             }
         }
-        console.error('Invalid format for .say() message.');
     }
 }
 

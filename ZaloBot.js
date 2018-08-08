@@ -19,22 +19,34 @@ class ZaloBot {
             });
         });
     }
+    uploadImage(imgURL) {
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, response => {
+                if (response.errorMsg == 'Success') {
+                    resolve(response.data.imageId);
+                } else {
+                    reject(response);
+                }
+            });
+        });
+    }
     sendImageMessage(recipientId, imgURL, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
         // main logo ID: 222d2fdd2cdcc5829ccd
         // sói: 27fe82aa81ab68f531ba
-        return new Promise((resolve, reject) => {
-            this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, function (response) {
-                console.log(response.data.imageId);
-                let imageid = /*'222d2fdd2cdcc5829ccd'; */response.data.imageId;
+        // tiên tri: 9266265b5b5ab204eb4b
+        let start = async () => {
+            let imageid = await this.uploadImage(imgURL);
+            return await new Promise((resolve, reject) => {
                 this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
                     if (response.errorMsg == 'Success') {
                         resolve(response);
                     } else {
                         reject(response);
                     }
-                })
-            }.bind(this));
-        });
+                });
+            });
+        }
+        start();
     }
     sendActionList(recipientId) {
         var params = {

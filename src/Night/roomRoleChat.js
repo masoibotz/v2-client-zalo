@@ -79,18 +79,18 @@ module.exports = async function (gamef, bot, userRoom) {
                 });
             } else if (p.role == 2) { // Bảo vệ
                 return bot.say(p.joinID, {
-                    image: 'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg',
+                    imageID: 'bba5a005de04375a6e15',
                     text: isCupidTxt + `🗿Bảo vệ dậy đi! Đêm nay bạn muốn bảo vệ ai?\n/save <id> để bảo vệ\n${playersList}`
                 });
             } else if (p.role == 3) { // Thợ săn
                 return bot.say(p.joinID, {
-                    image: 'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg',
+                    imageID: '96f36f981299fbc7a288',
                     text: isCupidTxt + `🔫Thợ săn dậy đi! Đêm nay bạn muốn bắn ai?\n/fire <id> để ngắm bắn\n${playersList}`
                 });
             } else if (p.role == -2) { // Bán sói
                 gamef.getRoom(userRoom).roleDoneBy(p.joinID);
                 return bot.say(p.joinID, {
-                    image: 'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg',
+                    imageID: '5e8da6e6dbe732b96bf6',
                     text: isCupidTxt + `🐺Bạn là BÁN SÓI!\nBạn vẫn còn là DÂN! Ngủ tiếp đi!\nID CẢ LÀNG:\n${playersList}`
                 });
             } else if (p.role == 5) { // Phù thủy

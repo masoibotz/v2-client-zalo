@@ -37,7 +37,7 @@ class ZaloBot {
         // tiên tri: 45d1697f177efe20a76f
         /// thợ săn: 96f36f981299fbc7a288
         /// phản bội: 5e8da6e6dbe732b96bf6
-        /// bảo vệ: c1f13a9a479baec5f78a
+        /// bảo vệ: bba5a005de04375a6e15
         // già làng: e13adc74a175482b1164
         // dân: 39d3189d659c8cc2d58d
         // phủ thủy: 2e250d6b706a9934c07b
@@ -76,9 +76,11 @@ class ZaloBot {
             console.log(response.errorMsg);
         })
     }
-    getProfile(recipientId, callback) {
-        this.ZOAClient.api('getprofile', { uid: recipientId }, function (response) {
-            callback(response.data);
+    getProfile(recipientId) {
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('getprofile', { uid: recipientId }, function (response) {
+                response.data ? resolve(response.data) : reject(response);
+            });
         });
     }
     say(recipientId, message) {

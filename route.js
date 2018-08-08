@@ -3,6 +3,9 @@ const joinRoom = require('./src/Room/Join');
 const readyRoom = require('./src/Room/Ready');
 const leaveRoom = require('./src/Room/Leave');
 const newRoom = require('./src/Room/New');
+const helpMenu = require('./src/Menu/Help');
+const renameMenu = require('./src/Menu/TienIch').rename;
+const renameAction = require('./src/Menu/TienIch').renameAction;
 
 module.exports = (gamef, bot, joinID, message) => {
     // JOIN MODULE
@@ -22,23 +25,17 @@ module.exports = (gamef, bot, joinID, message) => {
     } else if (message == '#new') {
         newRoom(gamef, bot, joinID);
         return true;
-    } else if (message == 'upload') {
-        bot.say(joinID, {
-            text: 'bảo vệ',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/phuthuy.jpg'
-        });
-        bot.say(joinID, {
-            text: 'thợ săn',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/gialang.jpg'
-        });
-        bot.say(joinID, {
-            text: 'phản bội',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/cupid.jpg'
-        });
-        bot.say(joinID, {
-            text: 'phản bội',
-            image:'http://hstatic.net/936/1000019936/10/2015/7-28/danlang.jpg'
-        });
-    }
+    } else if (message == '#help') {
+        helpMenu(bot, joinID);
+        return true;
+    } else if (/#rename.*/g.test(message)) {
+        if (message == '#rename') {
+            renameMenu(gamef, bot, joinID);
+        } else {
+            let newName = message.match(/(?<=#rename\s).*/g)
+            renameAction(gamef, bot, joinID, newName);
+        }
+        return true;
+    } 
     return false;
 }

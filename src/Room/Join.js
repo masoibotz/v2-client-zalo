@@ -20,7 +20,7 @@ module.exports = (gamef, bot, joinID, roomNumberTxt) => {
         // save room number for user
         gamef.setUserRoom(joinID, roomID);
         // add new player to room
-        bot.getProfile(joinID, (joinUser) => {
+        bot.getProfile(joinID).then((joinUser) => {
             gamef.getRoom(roomID).addPlayer(new Player({
                 id: gamef.getRoom(roomID).newPlayerID(),
                 joinID: joinID,

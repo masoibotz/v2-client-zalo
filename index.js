@@ -54,10 +54,13 @@ app.get('/webhook/', function (req, res) {
     case 'sendlinkmsg':
       attachmentChat(gamef, bot, joinID, 'link', {
         link: req.query.href,
-        linktitle: req.query.message!=''?req.query.message:'Bot đã gửi liên kết',
-        linkdes: req.query.description!=''?req.query.description:'send link',
+        linktitle: req.query.message != '' ? req.query.message : 'Bot đã gửi liên kết',
+        linkdes: req.query.description != '' ? req.query.description : 'Bấm vào để mở liên kết',
         linkthumb: req.query.thumb
       });
+      break;
+    case 'sendgifmsg':
+      bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
       break;
     default:
       bot.say(joinID, `Bạn đã gửi nội dung không được hỗ trợ!`);

@@ -16,6 +16,9 @@ module.exports = (gamef, bot, joinID, type, data) => {
     const userRoom = gamef.getUserRoom(joinID);
     if (userRoom != undefined) {
         let user = gamef.getRoom(userRoom).getPlayer(joinID);
+        if (type=='link' && sendMsg.links.linktitle) {
+            sendMsg.links.linktitle = `${user.first_name} đã gửi liên kết`;
+        }
         if (gamef.getRoom(userRoom).alivePlayer[joinID]) { // nếu còn sống
             if (gamef.getRoom(userRoom).isNight) { // ban đêm
                 let userRole = gamef.getRoom(userRoom).getRole(joinID);

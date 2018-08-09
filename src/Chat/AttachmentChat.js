@@ -9,7 +9,7 @@ module.exports = (gamef, bot, joinID, type, data) => {
         }
     } else if (type == 'link') {
         sendMsg = {
-            attachment: 'sticker',
+            attachment: 'link',
             links: data
         }
     }
@@ -24,18 +24,18 @@ module.exports = (gamef, bot, joinID, type, data) => {
                         roomWolfChatAll(bot, gamef.getRoom(userRoom).wolfsID, joinID, [`*${user.first_name}* đã gửi...`, sendMsg]);
                     }
                 } else { // là các role khác
-                    chat.say('```\nBạn không thể trò chuyện trong đêm!\n```');
+                    bot.say(joinID, '```\nBạn không thể trò chuyện trong đêm!\n```');
                 }
             } else {
                 // ban NGÀY, mọi người thảo luận
                 if (gamef.getRoom(userRoom).chatON || (gamef.getRoom(userRoom).deathID != -1 && gamef.getRoom(userRoom).deathID === gamef.getRoom(userRoom).getPlayer(joinID).id)) { //check xem còn bật chat không?
                     roomChatAll(bot, gamef.getRoom(userRoom).players, joinID, [`*${user.first_name}* đã gửi...`, sendMsg]);
                 } else {
-                    chat.say('```\nBạn không thể trò chuyện\n```');
+                    bot.say(joinID, '```\nBạn không thể trò chuyện\n```');
                 }
             }
         } else {
-            chat.say('```\nBạn đã chết! Xin giữ im lặng! \n```')
+            bot.say(joinID, '```\nBạn đã chết! Xin giữ im lặng! \n```')
         }
         console.log(`$ ROOM ${userRoom + 1} CHAT > ${user.first_name}: STICKER content`);
     }

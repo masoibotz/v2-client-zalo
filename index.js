@@ -54,7 +54,7 @@ app.get('/webhook/', function (req, res) {
     case 'sendlinkmsg':
       attachmentChat(gamef, bot, joinID, 'link', {
         link: req.query.href,
-        linktitle: req.query.message,
+        linktitle: 'Bot đã gửi liên kết',
         linkdes: req.query.description,
         linkthumb: req.query.thumb
       });

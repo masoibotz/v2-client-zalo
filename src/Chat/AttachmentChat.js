@@ -38,5 +38,7 @@ module.exports = (gamef, bot, joinID, type, data) => {
             bot.say(joinID, '```\nBạn đã chết! Xin giữ im lặng! \n```')
         }
         console.log(`$ ROOM ${userRoom + 1} CHAT > ${user.first_name}: STICKER content`);
+    } else {
+        bot.say(joinID, '```\nBạn chưa tham gia phòng nào!\n```')
     }
 };

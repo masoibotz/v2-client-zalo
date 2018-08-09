@@ -1,6 +1,6 @@
 module.exports = (bot, joinID) => {
     bot.getProfile(joinID).then((user) => {
-        bot.say(joinID, `Xin chào ${user.last_name + ' ' + user.first_name}! \n` +
+        bot.say(joinID, `Xin chào ${user.displayName}! \n` +
             `Để bắt đầu, bạn hãy mở MENU (nút 3 dấu gạch ngang) bên dưới.\n` +
             `Chọn menu: *🎮Chơi... > 🌝Tham gia phòng chơi* \n` +
             `Chọn một phòng chơi từ danh sách để tham gia một phòng!\n` +

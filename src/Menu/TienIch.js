@@ -7,7 +7,8 @@ const infoCallback = (gamef, bot, joinID) => {
             let playersInRoomTxt = gamef.getRoom(userRoom).playersTxt.join(' ; ');
             bot.say(joinID, `👨‍👩‍👦‍👦Danh sách dân và sói làng ${userRoom + 1}: \n${playersInRoomTxt}`);
         } else {
-            bot.say(joinID, '```\nTrò chơi chưa bắt đầu!\n```');
+            let roomView = gamef.getSimpleRoomPlayerView(userRoom).join(`\n`);
+            bot.say(joinID, roomView);
         }
     } else {
         bot.say(joinID, '```\nBạn chưa tham gia phòng chơi nào!\n```');

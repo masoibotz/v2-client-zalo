@@ -2,6 +2,7 @@ var ZaloOA = require('zalo-sdk').ZaloOA;
 
 class ZaloBot {
     constructor() {
+        this.imageCache = [];
         var zaConfig = {
             oaid: '3143856013449793558',
             secretkey: '0DHbJHF76STPd6D2cMd4'
@@ -21,9 +22,14 @@ class ZaloBot {
     }
     uploadImage(imgURL) {
         return new Promise((resolve, reject) => {
+            if (this.imageCache[imgURL]) {
+                resolve(this.imageCache[imgURL]);
+                return;
+            }
             this.ZOAClient.api('upload/image', 'POST', { file: imgURL }, response => {
                 if (response.errorMsg == 'Success') {
                     console.log(imgURL + ' => ' + response.data.imageId);
+                    this.imageCache[imgURL] = response.data.imageId;
                     resolve(response.data.imageId);
                 } else {
                     reject(response);

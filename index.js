@@ -9,41 +9,11 @@ const { Game, Room, Player } = require('./src/MainGame/Game.js');
 
 //module import
 const route = require('./route');
-
-const menuTienIch = require('./src/Menu/TienIch');
-const menuHelp = require('./src/Menu/Help');
-const attachmentChat = require('./src/Chat/AttachmentChat');
-const joinRoom = require('./src/Room/Join');
-const readyRoom = require('./src/Room/Ready');
-const leaveRoom = require('./src/Room/Leave');
-const newRoom = require('./src/Room/New');
 const chatAndVote = require('./src/Chat/Chat');
-const adminCMD = require('./src/Menu/Admin');
+const attachmentChat = require('./src/Chat/AttachmentChat');
 
 const gamef = new Game();
 const bot = new ZaloBot();
-
-// **** BOT MODULE ****
-// setup GreetingText / GetStartedButton / PersistentMenu
-// bot.module(botSetup);
-// // help
-// bot.module(menuHelp);
-// // handle menu > tiện ích khi chơi
-// gamef.module(menuTienIch, bot);
-// // handle admin
-// gamef.module(adminCMD, bot);
-// // handle attachment chat
-// gamef.module(attachmentChat, bot);
-// // join room
-// gamef.module(joinRoom, bot);
-// // ready room
-// gamef.module(readyRoom, bot);
-// // leave room
-// gamef.module(leaveRoom, bot);
-// // new room
-// gamef.module(newRoom, bot);
-// // chat and vote
-// gamef.module(chatAndVote, bot);
 
 app.set('port', (process.env.PORT || 3000))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -55,10 +25,10 @@ app.get('/webhook/', function (req, res) {
   let joinID = req.query.fromuid;
   switch (req.query.event) {
     case 'sendmsg':
-      if (!route(gamef, bot, joinID, message)){
+      if (!route(gamef, bot, joinID, message)) {
         chatAndVote(gamef, bot, joinID, message);
       }
-      
+
       // switch (message) {
       //   case '#join':
       //     let pro = bot.getProfile(joinID);
@@ -76,9 +46,12 @@ app.get('/webhook/', function (req, res) {
       // }
       break;
     case 'sendstickermsg':
-      bot.say(joinID, `Đã nhận sticker!`);
-      console.log(req.query);
+      bot.say(joinID, `Bạn đã gửi 1 sticker!`);
+      attachmentChat(gamef, bot, joinID, 'sticker', { stickerID: req.query.stickerid });
       break;
+    default:
+      bot.say(joinID, `Bạn đã gửi nội dung không được hỗ trợ!`);
+      console.log('unsupported message:\n', req.query);
   }
   res.sendStatus(200);
 })

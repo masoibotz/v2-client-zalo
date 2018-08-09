@@ -38,17 +38,6 @@ class ZaloBot {
         });
     }
     sendImageMessage(recipientId, imageid, messageTxt = 'Bot đã gửi 1 hình ảnh!') {
-        // main logo ID: 222d2fdd2cdcc5829ccd
-        // sói: c3c4e96a976b7e35277a
-        // tiên tri: 45d1697f177efe20a76f
-        /// thợ săn: 96f36f981299fbc7a288
-        /// phản bội: 5e8da6e6dbe732b96bf6
-        /// bảo vệ: bba5a005de04375a6e15
-        // già làng: e13adc74a175482b1164
-        // dân: 39d3189d659c8cc2d58d
-        // phủ thủy: 2e250d6b706a9934c07b
-        // cupid: b71e9750ea51030f5a40
-
         return new Promise((resolve, reject) => {
             this.ZOAClient.api('sendmessage/image', 'POST', { uid: recipientId, message: messageTxt, 'imageid': imageid }, function (response) {
                 if (response.errorMsg == 'Success') {
@@ -58,7 +47,17 @@ class ZaloBot {
                 }
             });
         });
-
+    }
+    sendStickerMessage(recipientId, stickerID) {
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('sendmessage/sticker', 'POST', {uid: recipientId, stickerid: stickerID}, function(response) {
+                if (response.errorMsg == 'Success') {
+                    resolve(response);
+                } else {
+                    reject(response);
+                }
+            });
+        });
     }
     sendActionList(recipientId) {
         var params = {
@@ -99,6 +98,8 @@ class ZaloBot {
                 });
             } else if (message.imageID && message.text) {
                 return this.sendImageMessage(recipientId, message.imageID, message.text);
+            } else if (message.stickerID && message.attachment == 'sticker') {
+                return this.sendStickerMessage(recipientId, message.stickerID);
             } else if (Array.isArray(message)) {
                 return message.reduce((promise, msg) => {
                     return promise.then(() => this.say(recipientId, msg));

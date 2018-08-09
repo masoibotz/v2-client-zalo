@@ -50,7 +50,22 @@ class ZaloBot {
     }
     sendStickerMessage(recipientId, stickerID) {
         return new Promise((resolve, reject) => {
-            this.ZOAClient.api('sendmessage/sticker', 'POST', {uid: recipientId, stickerid: stickerID}, function(response) {
+            this.ZOAClient.api('sendmessage/sticker', 'POST', { uid: recipientId, stickerid: stickerID }, function (response) {
+                if (response.errorMsg == 'Success') {
+                    resolve(response);
+                } else {
+                    reject(response);
+                }
+            });
+        });
+    }
+    sendLinkMessage(recipientId, links) {
+        var params = {
+            uid: recipientId,
+            links: Array.isArray(links)?links: [links]
+        }
+        return new Promise((resolve, reject) => {
+            this.ZOAClient.api('sendmessage/links', 'POST', params, function (response) {
                 if (response.errorMsg == 'Success') {
                     resolve(response);
                 } else {
@@ -92,7 +107,9 @@ class ZaloBot {
         if (typeof message === 'string') {
             return this.sendTextMessage(recipientId, message);
         } else {
-            if (message.image && message.text) {
+            if (message.quickReply) {
+
+            } else if (message.image && message.text) {
                 return this.uploadImage(message.image).then((imageid) => {
                     this.sendImageMessage(recipientId, imageid, message.text);
                 });
@@ -100,6 +117,8 @@ class ZaloBot {
                 return this.sendImageMessage(recipientId, message.imageID, message.text);
             } else if (message.stickerID && message.attachment == 'sticker') {
                 return this.sendStickerMessage(recipientId, message.stickerID);
+            } else if (message.attachment == 'link') {
+                return this.sendLinkMessage(recipientId, message.links);
             } else if (Array.isArray(message)) {
                 return message.reduce((promise, msg) => {
                     return promise.then(() => this.say(recipientId, msg));

@@ -46,8 +46,18 @@ app.get('/webhook/', function (req, res) {
       // }
       break;
     case 'sendstickermsg':
-      bot.say(joinID, `Bạn đã gửi 1 sticker!`);
       attachmentChat(gamef, bot, joinID, 'sticker', { stickerID: req.query.stickerid });
+      break;
+    case 'sendimagemsg':
+      bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
+      break;
+    case 'sendlinkmsg':
+      attachmentChat(gamef, bot, joinID, 'link', {
+        link: req.query.href,
+        linktitle: req.query.message,
+        linkdes: req.query.description,
+        linkthumb: req.query.thumb
+      });
       break;
     default:
       bot.say(joinID, `Bạn đã gửi nội dung không được hỗ trợ!`);

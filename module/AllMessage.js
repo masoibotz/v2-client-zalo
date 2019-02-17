@@ -30,6 +30,15 @@ module.exports = async (userInstance, bot, joinID, text) => {
     }
     // main
     if (data && data.state.status == 'ingame') {
+        if (/[0-9]+:.+|-1/g.test(text) || /#[a-z]+\s[0-9]+|-1/g.test(text)) {
+            // target_id
+            let targetIndex = text.match(/[0-9]+/g)[0];
+            let actionName = text.match(/[a-z]+/g)[0];
+            let playerList = userInstance.getPlayerList(joinID);
+            let targetID = Object.keys(playerList)[targetIndex];
+            bot.say(joinID, await handleVoteID(chatInstance, data, userID, targetID, actionName));
+            return;
+        }
         switch (data.state.dayStage) {
             case "cupid": if (/#cupid\s[0-9]+\s[0-9]+/g.test(text)) {
                 let targets = text.match(/[0-9]+/g);
@@ -50,13 +59,6 @@ module.exports = async (userInstance, bot, joinID, text) => {
                 bot.say(joinID, await handleVoteID(chatInstance, data, userID, treoOrTha ? targetID : ""));
             } break;
         }
-    } else if (data && data.state.status == 'ingame' && /[0-9]+:.+|-1/g.test(text) || /#[a-z]+\s[0-9]+|-1/g.test(text)) {
-        // target_id
-        let targetIndex = text.match(/[0-9]+/g)[0];
-        let actionName = text.match(/[a-z]+/g)[0];
-        let playerList = userInstance.getPlayerList(joinID);
-        let targetID = Object.keys(playerList)[targetIndex];
-        bot.say(joinID, await handleVoteID(chatInstance, data, userID, targetID, actionName));
     } else {
         // tin nhắn
         var userRole;

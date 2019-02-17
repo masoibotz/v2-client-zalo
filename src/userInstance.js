@@ -51,7 +51,7 @@ module.exports = class UserInstance {
     module(factory, bot) {
         return factory.apply(this, [this, bot]);
     }
-    connectChat(userID, joinID, chat) {
+    connectChat(userID, joinID, bot) {
         var newChatMgr = new ChatManager({
             instanceLocator: "v1:us1:754dee8b-d6c4-41b4-a6d6-7105da589788",
             userId: userID,
@@ -62,7 +62,7 @@ module.exports = class UserInstance {
         return newChatMgr.connect({
             onRemovedFromRoom: room => {
                 console.log("kicked out room");
-                chat.say({
+                bot.say(joinID, {
                     text: `Bạn đã rời phòng chơi!`,
                     buttons: [
                         { type: 'postback', title: 'Tham gia phòng khác', payload: 'JOIN_ROOM' },
@@ -90,28 +90,28 @@ module.exports = class UserInstance {
         var second = timeLeft % 60;
         return `[⏱${minute > 0 ? `${minute}:` : "0:"}${second < 10 ? `0${second}` : `${second}`}] `;
     }
-    chatSayMessage(chat, userID, message, timeLeft = -1) {
+    chatSayMessage(bot, userID, message, timeLeft = -1) {
         if (message.sender.id !== userID) {
             if (message.attachment && message.attachment.type && message.attachment.link) {
                 // attachment
                 console.log(`${message.sender.name}: attachment`);
-                chat.say([`${this.timeLeftToString(timeLeft)}${message.sender.name} đã gửi...`, {
+                bot.say(joinID, [`${this.timeLeftToString(timeLeft)}${message.sender.name} đã gửi...`, {
                     attachment: message.attachment.type,
                     url: message.attachment.link
                 }])
             } else {
                 // text
                 console.log(`${message.sender.name}: ${message.text}`);
-                chat.say(`${this.timeLeftToString(timeLeft)}${message.sender.name}:\n${message.text}`);
+                bot.say(joinID, `${this.timeLeftToString(timeLeft)}${message.sender.name}:\n${message.text}`);
             }
         } else {
-            chat.sendAction('mark_seen');
+            // bot.sendAction('mark_seen');
         }
     }
-    subscribeChat(roomID, joinID, chat, convo) {
+    subscribeChat(roomID, joinID, bot) {
         var currentUser = this.getInstance(joinID);
         if (!currentUser) {
-            chat.say({
+            bot.say(joinID, {
                 text: `Vui lòng đăng nhập!\nsubcribe_error_not_connected`,
                 buttons: [
                     { type: 'postback', title: 'Đăng nhập', payload: 'CONNECT' },
@@ -122,7 +122,7 @@ module.exports = class UserInstance {
         }
         if (this.getRoomID(joinID)) {
             this.leaveChat();
-            chat.say(`ℹ️Bạn đã rời phòng ${this.getRoomID(joinID)} để tham gia phòng ${roomID}!`);
+            bot.say(joinID, `ℹ️Bạn đã rời phòng ${this.getRoomID(joinID)} để tham gia phòng ${roomID}!`);
         }
         currentUser.subscribeToRoom({
             roomId: roomID,
@@ -143,7 +143,7 @@ module.exports = class UserInstance {
                                 let userListTxt = Object.keys(data.players.ready).map((u, i) => {
                                     return `${data.players.ready[u] ? `🌟` : `☆`}${i + 1}: ${data.players.names[u]}`;
                                 }).join("\n");
-                                chat.say({
+                                bot.say(joinID, {
                                     text: `PHÒNG ${roomID}\n${userListTxt}`,
                                     buttons: [
                                         { type: 'postback', title: '🌟Sẵn sàng', payload: 'READY' },
@@ -166,15 +166,15 @@ module.exports = class UserInstance {
                             }, {});
                             this.setPlayerList(joinID, playerList); // lưu lại mạng vote
                             if (text != "") {
-                                chat.say("```\n" + text + "\n```").then(() => {
-                                    goStage(chat, data, userID, playerList);
+                                bot.say(joinID, "```\n" + text + "\n```").then(() => {
+                                    goStage(bot, data, userID, playerList);
                                 })
                             } else {
-                                goStage(chat, data, userID, playerList);
+                                goStage(bot, data, userID, playerList);
                             }
                         } catch (e) {
                             console.log(e);
-                            convo.say(`MÀN HÌNH XANH HIỆN LÊN\nLiên hệ ngay admin về lỗi này!\nJSON_invalid_error`);
+                            bot.say(joinID, `MÀN HÌNH XANH HIỆN LÊN\nLiên hệ ngay admin về lỗi này!\nJSON_invalid_error`);
                         }
                     } else if (message.text[0] === '[') {
                         try {//is voteList from other
@@ -198,7 +198,7 @@ module.exports = class UserInstance {
                                     timeLeft = (new Date(data.state.stageEnd) - new Date(Date.now())) / 1000;
                                     timeLeft = Math.floor(timeLeft);
                                 }
-                                this.chatSayMessage(chat, currentUser.id, {
+                                this.chatSayMessage(bot, currentUser.id, {
                                     text: content[0].text,
                                     sender: {
                                         id: message.sender.id,
@@ -217,21 +217,21 @@ module.exports = class UserInstance {
                                 timeLeft = (new Date(data.state.stageEnd) - new Date(Date.now())) / 1000;
                                 timeLeft = Math.floor(timeLeft);
                             }
-                            this.chatSayMessage(chat, currentUser.id, message, timeLeft);
+                            this.chatSayMessage(bot, currentUser.id, message, timeLeft);
                             // if (message.sender.id !== currentUser.id) {
                             //     if (message.attachment && message.attachment.type && message.attachment.link) {
                             //         // attachment
-                            //         chat.say([`${message.sender.name} đã gửi...`, {
+                            //         bot.say(joinID, [`${message.sender.name} đã gửi...`, {
                             //             attachment: message.attachment.type,
                             //             url: message.attachment.link
                             //         }])
                             //     } else {
                             //         // text
-                            //         chat.say(`${message.sender.name}:\n${message.text}`);
+                            //         bot.say(joinID, `${message.sender.name}:\n${message.text}`);
                             //         console.log(`${message.sender.name}: ${message.text}`);
                             //     }
                             // } else {
-                            //     chat.sendAction('mark_seen');
+                            //     bot.sendAction('mark_seen');
                             // }
                         }
                     }
@@ -240,13 +240,12 @@ module.exports = class UserInstance {
             messageLimit: 0
         }).catch(error => {
             console.log("user.subscribeToRoom error:", error);
-            convo.say({
+            bot.say(joinID, {
                 text: `ℹ️Tham gia phòng thất bại\nuser.subscribeToRoom_error`,
                 buttons: [
                     { type: 'postback', title: 'Thử lại', payload: 'JOIN_ROOM' },
                 ]
             });
-            convo.end();
         });
         this.setRoomID(joinID, roomID);
     }

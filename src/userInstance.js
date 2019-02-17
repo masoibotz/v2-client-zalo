@@ -217,7 +217,7 @@ module.exports = class UserInstance {
                                 timeLeft = (new Date(data.state.stageEnd) - new Date(Date.now())) / 1000;
                                 timeLeft = Math.floor(timeLeft);
                             }
-                            this.chatSayMessage(bot, currentUser.id, message, timeLeft);
+                            this.chatSayMessage(bot, joinID, currentUser.id, message, timeLeft);
                             // if (message.sender.id !== currentUser.id) {
                             //     if (message.attachment && message.attachment.type && message.attachment.link) {
                             //         // attachment

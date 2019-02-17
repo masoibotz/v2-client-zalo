@@ -41,6 +41,7 @@ module.exports = (userInstance, bot, joinID, message) => {
         }
     } else {
         switch (message) {
+            case "#vote": console.log("VOTE ROUTE"); voteModule(userInstance, bot, joinID); break;
             case "#logout": console.log("LOGOUT ROUTE"); logoutModule(userInstance, bot, joinID); break;
             case "#leave": console.log("LEAVE ROUTE"); leaveModule(userInstance, bot, joinID); break;
             case '#ready': console.log("READY ROUTE"); readyModule(userInstance, bot, joinID); break;
@@ -48,7 +49,7 @@ module.exports = (userInstance, bot, joinID, message) => {
             case '#new': console.log("NEW ROUTE"); bot.say(joinID, `Tính năng thêm phòng chưa sẵn sàng!`); break;
             case '#help': console.log("HELP ROUTE"); bot.say(joinID, `Trợ giúp chưa được viết xong :v`); break;
             case '#kick': console.log("KICK ROUTE"); bot.say(joinID, `Tính năng kick người chơi đang trong quá trình nghiên cứu!`); break; // regexp: /\/kick.[0-9]+.[0-9]+/g
-            case '#download': console.log("DOWNLOAD ROUTE");downloadAppModule(bot, joinID); break;
+            case '#download': console.log("DOWNLOAD ROUTE"); downloadAppModule(bot, joinID); break;
             default: console.log("MESSAGE ROUTE"); allMessageModule(userInstance, bot, joinID, message); break;
         }
     }

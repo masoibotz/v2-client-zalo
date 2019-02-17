@@ -1,5 +1,6 @@
 const handleVoteID = require('../src/HandleVoteID');
 const { extractUserRole } = require('../src/DataUtils');
+const { sendCupid, sendSuperWolf, sendWitchSave } = require('../src/sendRole');
 
 module.exports = async (userInstance, bot, joinID, text) => {
     var chatInstance = userInstance.getInstance(joinID);
@@ -28,17 +29,34 @@ module.exports = async (userInstance, bot, joinID, text) => {
         return;
     }
     // main
-    if (data && data.state.status == 'ingame' && /\/(treo|tha)/.test(text)) {
-        // treo/tha
-        let treoOrTha = /\/treo/.test(text)
-        let targetID = data.roleInfo.victimID;
-        bot.say(joinID, await handleVoteID(chatInstance, data, userID, treoOrTha ? targetID : ""));
-    } else if (data && data.state.status == 'ingame' && /[0-9]+:.+|-1/g.test(text)) {
+    if (data && data.state.status == 'ingame') {
+        switch (data.state.dayStage) {
+            case "cupid": if (/#cupid\s[0-9]+\s[0-9]+/g.test(text)) {
+                let targets = text.match(/[0-9]+/g);
+                bot.say(joinID, await sendCupid(roomID, Object.keys(playerList)[targets[0]], Object.keys(playerList)[targets[1]]));
+            } break;
+            case "superwolf": if (/#0?nguyen/g.test(text)) {
+                let nguyenOrNot = /#nguyen/g.test(text);
+                bot.say(joinID, await sendSuperWolf(roomID, nguyenOrNot ? data.roleInfo.victimID : ""));
+            } break;
+            case "witch": if (/#0?cuu/g.test(text)) {
+                let cuuOrNot = /#cuu/g.test(text);
+                bot.say(joinID, await sendWitchSave(roomID, cuuOrNot));
+            } break;
+            case "voteYesNo": if (/#(treo|tha)/g.test(text)) {
+                // treo/tha
+                let treoOrTha = /#treo/g.test(text)
+                let targetID = data.roleInfo.victimID;
+                bot.say(joinID, await handleVoteID(chatInstance, data, userID, treoOrTha ? targetID : ""));
+            } break;
+        }
+    } else if (data && data.state.status == 'ingame' && /[0-9]+:.+|-1/g.test(text) || /#[a-z]+\s[0-9]+|-1/g.test(text)) {
         // target_id
         let targetIndex = text.match(/[0-9]+/g)[0];
+        let actionName = text.match(/[a-z]+/g)[0];
         let playerList = userInstance.getPlayerList(joinID);
         let targetID = Object.keys(playerList)[targetIndex];
-        bot.say(joinID, await handleVoteID(chatInstance, data, userID, targetID));
+        bot.say(joinID, await handleVoteID(chatInstance, data, userID, targetID, actionName));
     } else {
         // tin nhắn
         var userRole;

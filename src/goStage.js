@@ -1,7 +1,7 @@
-const { mainNightRole, doCupidRole, doSuperWolfRole, doWitchRole } = require('./mainNightRole');
+const { mainNightRole, doWitchRole } = require('./mainNightRole');
 const { roleName, roleImage, extractUserRole, isAlive } = require('./DataUtils');
 
-module.exports = function goStage(chat, gameData, userID, playerList) {
+module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
     var userRole = extractUserRole(gameData, userID);
     var names = gameData.players.names;
     var roomID = gameData.roomChatID;
@@ -9,29 +9,19 @@ module.exports = function goStage(chat, gameData, userID, playerList) {
     let coupleIndex = coupleID.indexOf(userID);
     switch (gameData.state.dayStage) {
         case 'readyToGame':
-            chat.sendMessage({
-                attachment: {
-                    type: "template",
-                    payload: {
-                        template_type: "media",
-                        elements: [{
-                            media_type: "image",
-                            url: roleImage[userRole],
-                            buttons: [{
-                                type: "web_url",
-                                url: roleImage[userRole],
-                                title: roleName[userRole],
-                            }]
-                        }]
-                    }
-                }
-            });
+            bot.say(joinID, {
+                text: roleName[userRole],
+                image: roleImage[userRole]
+            })
             break;
         case 'cupid':
             if (userRole == 7) {
-                doCupidRole(chat, roomID, gameData, playerList);
+                bot.say(joinID, {
+                    text: `👼GHÉP ĐÔI\n#cupid <người 1> <người 2>\nVD: #cupid 9 7`,
+                    quickReplies: Object.values(playerList)
+                })
             } else {
-                chat.say(`👼THẦN TÌNH YÊU đang phân vân...`);
+                bot.say(joinID, `👼THẦN TÌNH YÊU đang phân vân...`);
             }
             break;
         case 'night':
@@ -40,27 +30,31 @@ module.exports = function goStage(chat, gameData, userID, playerList) {
                 nightNotify += `💕Bạn cặp đôi với ${names[coupleID[coupleIndex == 1 ? 0 : 1]]}\n`;
             }
             if (isAlive(gameData, userID)) { // còn sống
-                mainNightRole(chat, roomID, gameData, userID, userRole, playerList, nightNotify);
+                mainNightRole(bot, joinID, roomID, gameData, userID, userRole, playerList, nightNotify);
             } else {
-                chat.say(`💀ĐÊM RỒI!\nĐêm nay bạn đã chết!`);
+                bot.say(joinID, `💀ĐÊM RỒI!\nĐêm nay bạn đã chết!`);
             }
             break;
         case 'superwolf':
             if (userRole == -3) {
                 if (gameData.roleInfo.superWolfVictimID == "") {
-                    doSuperWolfRole(chat, roomID, gameData);
+                    if (gameData.players.names[victimID] != "") {
+                        bot.say(joinID, `🐺SÓI NGUYỀN\n${gameData.players.names[victimID]} đã chết\n#nguyen để nguyền!\n#0nguyen để bỏ nguyền!`);
+                    } else {
+                        bot.say(joinID, `🐺SÓI NGUYỀN\nKhông có ai chết cả! Buồn ghê :v`);
+                    }
                 } else {
-                    chat.say(`🐺Bạn đã nguyền 1 lần rồi!`);
+                    bot.say(joinID, `🐺Bạn đã nguyền 1 lần rồi!`);
                 }
             } else {
-                chat.say(`🐺SÓI NGUYỀN đang suy tính...`);
+                bot.say(joinID, `🐺SÓI NGUYỀN đang suy tính...`);
             }
             break;
         case 'witch':
             if (userRole == 5) {
-                doWitchRole(chat, roomID, gameData, playerList);
+                doWitchRole(bot, joinID, roomID, gameData, playerList);
             } else {
-                chat.say(`🧙‍PHÙ THỦY đang phù phép...`);
+                bot.say(joinID, `🧙‍PHÙ THỦY đang phù phép...`);
             }
             break;
         case 'discuss':
@@ -76,11 +70,11 @@ module.exports = function goStage(chat, gameData, userID, playerList) {
             // notifyDeath += gameData.roleInfo.lastDeath.length === 0 ? `Đêm qua không ai chết cả` : gameData.roleInfo.lastDeath.map((deathID) => {
             //     return `⚔${names[deathID]} đã chết`;
             // }).join('\n');
-            chat.say(notifyDeath);
+            bot.say(joinID, notifyDeath);
             break;
         case 'vote':
-            chat.say({
-                text: `VOTE\nBạn muốn treo cổ ai?\n${Object.values(playerList).join('|')}`,
+            bot.say(joinID, {
+                text: `VOTE\nBạn muốn treo cổ ai?`,
                 quickReplies: Object.values(playerList),
             });
             break;
@@ -100,19 +94,19 @@ module.exports = function goStage(chat, gameData, userID, playerList) {
         //     } else {
         //         voteResult += `Không ai bị treo cổ!`;
         //     }
-        //     chat.say(voteResult);
+        //     bot.say(joinID, voteResult);
         //     break;
         // case 'lastWord':
         //     if (gameData.roleInfo.victimID !== "") {
-        //         chat.say(`${names[gameData.roleInfo.victimID]} LÊN THỚT!\nBạn có 1 phút thanh minh`);
+        //         bot.say(joinID, `${names[gameData.roleInfo.victimID]} LÊN THỚT!\nBạn có 1 phút thanh minh`);
         //     } else {
-        //         chat.say(`Người chơi lên thớt không hợp lệ!\nnull_victim_invalid_error`);
+        //         bot.say(joinID, `Người chơi lên thớt không hợp lệ!\nnull_victim_invalid_error`);
         //     }
         //     break;
         case 'voteYesNo':
-            chat.say({
-                text: `TREO HAY THA?\n/treo /tha`,
-                quickReplies: ["/treo", "/tha"],
+            bot.say(joinID, {
+                text: `TREO HAY THA?`,
+                quickReplies: ["#treo", "#tha"],
             });
             break;
         // case 'voteYesNoResult':
@@ -126,7 +120,7 @@ module.exports = function goStage(chat, gameData, userID, playerList) {
         //             listTha = [...listTha, names[userID]];
         //         }
         //     });
-        //     chat.say(`KẾT QUẢ THEO/THA:\n`
+        //     bot.say(joinID, `KẾT QUẢ THEO/THA:\n`
         //         + `${listTreo.length} Treo: ${listTreo.join(", ")}\n`
         //         + `${listTha.length} Tha: ${listTha.join(", ")}\n\n`
         //         + `${names[victimID]} ${listTreo.length > listTha.length ? `đã bị treo cổ theo số đông!` : `vẫn được mọi người tin tưởng!`}`

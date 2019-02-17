@@ -41,7 +41,7 @@ async function sendVote(roomID, gameData, targetID, userID) {
 }
 async function sendFire(roomID, targetID, fireToKill) {
     console.log(`send Fire ${fireToKill ? 'GIẾT' : 'GHIM'} ${targetID}`);
-    return await sendVoteRequest(roomID, `{ "roleTarget.fireID": "${targetID}", "roleTarget.fireToKill": ${fireToKill}} `, `Đã bắn!`, `sendFire_error`);
+    return await sendVoteRequest(roomID, `{ "roleTarget.fireID": "${targetID}", "roleTarget.fireToKill": ${fireToKill}} `, `Xong!`, `sendFire_error`);
 }
 async function sendCupid(roomID, target1ID, target2ID) {
     console.log(`SEND CUPID ${target1ID} vs ${target2ID} `);
@@ -51,9 +51,9 @@ async function sendSuperWolf(roomID, targetID) {
     console.log(`SEND SUPERWOLF ${targetID}`);
     return await sendVoteRequest(roomID, `{"roleTarget.superWolfVictimID":"${targetID}"}`, `Đã nguyền!`, `sendSuperWolf_error`);
 }
-async function sendWitchSave(roomID) {
+async function sendWitchSave(roomID, value = true) {
     console.log(`send WitchSave`);
-    return await sendVoteRequest(roomID, `{"roleTarget.witchUseSave":true}`, `Đã cứu!`, `sendWitchSave_error`);
+    return await sendVoteRequest(roomID, `{"roleTarget.witchUseSave":${value}}`, `Đã cứu!`, `sendWitchSave_error`);
 }
 async function sendWitchKill(roomID, targetID) {
     console.log(`send WitchKill ${targetID}`);

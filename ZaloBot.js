@@ -1,5 +1,17 @@
 var ZaloOA = require('zalo-sdk').ZaloOA;
 
+const buttonPayload = {
+    "CONNECT": "login",
+    "REGISTER": "register",
+    "DISCONNECT": "logout",
+    "JOIN_ROOM": "join",
+    "LEAVE_ROOM": "leave",
+    "READY": "ready",
+    "START": "start",
+    "VOTE": "vote",
+    "DOWNLOAD_APP": "download"
+}
+
 class ZaloBot {
     constructor() {
         this.imageCache = [];
@@ -59,6 +71,12 @@ class ZaloBot {
             });
         });
     }
+    //sendLinkMessage(links = {
+    //     link: "https://go.to/#this-link",
+    //     linktitle: 'Title',
+    //     linkdes: `Subtitle`,
+    //     linkthumb: "https://source.img/images.png"
+    // })
     sendLinkMessage(recipientId, links) {
         var params = {
             uid: recipientId,
@@ -107,21 +125,21 @@ class ZaloBot {
         if (typeof message === 'string') {
             return this.sendTextMessage(recipientId, message);
         } else {
-            if (message.buttons && message.buttons.length > 0) {
-                return this.sendTextMessage(recipientId, `${message.text}\n${message.buttons.map(b => `#${b.payload} ${b.title}`).join("\n")}`);
-            } else if (message.quickReplies) {
+            if (message.buttons && message.buttons.length > 0) {// buttons
+                return this.sendTextMessage(recipientId, `${message.text}\n__________________\n${message.buttons.map(b => `#${buttonPayload[b.payload]} ${b.title}`).join("\n")}`);
+            } else if (message.quickReplies) { // quickReplies
                 return this.sendTextMessage(recipientId, `${message.text}\n${message.quickReplies.join("\n")}`);
-            } else if (message.image && message.text) {
+            } else if (message.image && message.text) { //image is imageURL
                 return this.uploadImage(message.image).then((imageid) => {
                     this.sendImageMessage(recipientId, imageid, message.text);
                 });
-            } else if (message.imageID && message.text) {
+            } else if (message.imageID && message.text) { //send image already uploaded
                 return this.sendImageMessage(recipientId, message.imageID, message.text);
-            } else if (message.stickerID && message.attachment == 'sticker') {
+            } else if (message.stickerID && message.attachment == 'sticker') { //zalo sticker
                 return this.sendStickerMessage(recipientId, message.stickerID);
-            } else if (message.attachment == 'link') {
+            } else if (message.attachment == 'link') { // send link card
                 return this.sendLinkMessage(recipientId, message.links);
-            } else if (Array.isArray(message)) {
+            } else if (Array.isArray(message)) { // multi messages support
                 return message.reduce((promise, msg) => {
                     return promise.then(() => this.say(recipientId, msg));
                 }, Promise.resolve());

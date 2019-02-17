@@ -167,10 +167,10 @@ module.exports = class UserInstance {
                             this.setPlayerList(joinID, playerList); // lưu lại mạng vote
                             if (text != "") {
                                 bot.say(joinID, "```\n" + text + "\n```").then(() => {
-                                    goStage(bot, data, userID, playerList);
+                                    goStage(bot, joinID, data, userID, playerList);
                                 })
                             } else {
-                                goStage(bot, data, userID, playerList);
+                                goStage(bot, joinID, data, userID, playerList);
                             }
                         } catch (e) {
                             console.log(e);

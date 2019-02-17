@@ -90,7 +90,7 @@ module.exports = class UserInstance {
         var second = timeLeft % 60;
         return `[⏱${minute > 0 ? `${minute}:` : "0:"}${second < 10 ? `0${second}` : `${second}`}] `;
     }
-    chatSayMessage(bot, userID, message, timeLeft = -1) {
+    chatSayMessage(bot, joinID, userID, message, timeLeft = -1) {
         if (message.sender.id !== userID) {
             if (message.attachment && message.attachment.type && message.attachment.link) {
                 // attachment
@@ -198,7 +198,7 @@ module.exports = class UserInstance {
                                     timeLeft = (new Date(data.state.stageEnd) - new Date(Date.now())) / 1000;
                                     timeLeft = Math.floor(timeLeft);
                                 }
-                                this.chatSayMessage(bot, currentUser.id, {
+                                this.chatSayMessage(bot, joinID, currentUser.id, {
                                     text: content[0].text,
                                     sender: {
                                         id: message.sender.id,

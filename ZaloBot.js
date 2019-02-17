@@ -108,9 +108,9 @@ class ZaloBot {
             return this.sendTextMessage(recipientId, message);
         } else {
             if (message.buttons && message.buttons.length > 0) {
-                return this.sendTextMessage(recipientId, `${message.text}\n${buttons.map(b => `#${b.payload} ${b.title}`).join("\n")}`);
+                return this.sendTextMessage(recipientId, `${message.text}\n${message.buttons.map(b => `#${b.payload} ${b.title}`).join("\n")}`);
             } else if (message.quickReply) {
-                return this.sendTextMessage(recipientId, `${message.text}\n${quickReply.join("\n")}`);
+                return this.sendTextMessage(recipientId, `${message.text}\n${message.quickReply.join("\n")}`);
             } else if (message.image && message.text) {
                 return this.uploadImage(message.image).then((imageid) => {
                     this.sendImageMessage(recipientId, imageid, message.text);

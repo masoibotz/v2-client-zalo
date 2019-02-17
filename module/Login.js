@@ -21,7 +21,7 @@ function login(userInstance, bot, joinID, userID) {
             });
             return;
         }
-        console.log("chatMgr.connect error:", error.info.error);
+        console.log("chatMgr.connect error:", error);
         bot.say(joinID, {
             text: `Đăng nhập thất bại\nchatMgr.connect_err`,
             buttons: [
@@ -48,8 +48,8 @@ function register(userInstance, bot, joinID, userID) {
     var currentUser = userInstance.getInstance(joinID);
     if (!currentUser) {
         bot.getProfile(joinID).then((user) => {
-            console.log("REG: ", { id: userID, name: `${user.first_name} ${user.last_name}`, avatar: user.profile_pic });
-            postRequest(`/reg`, { id: userID, name: `${user.first_name} ${user.last_name}`, avatar: user.profile_pic }).then(data => {
+            console.log("REG: ", { id: userID, name: `${user.displayName}`, avatar: user.avatar });
+            postRequest(`/reg`, { id: userID, name: `${user.displayName}`, avatar: user.avatar }).then(data => {
                 if (data.success) {
                     bot.say(joinID, {
                         text: `Bạn đã đăng kí thành công!\nVui lòng đăng nhập!`,

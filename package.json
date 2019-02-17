@@ -4,7 +4,9 @@
   "description": "Ma sói bot - zalo",
   "main": "index.js",
   "dependencies": {
+    "@pusher/chatkit-client": "^1.3.2",
     "express": "^4.16.3",
+    "jsdom": "^13.2.0",
     "node-schedule": "^1.3.0",
     "request": "^2.87.0",
     "zalo-sdk": "^2.0.4"

@@ -1,19 +1,26 @@
-const preJoinRoom = require('./src/Room/preJoin');
-const joinRoom = require('./src/Room/Join');
-const readyRoom = require('./src/Room/Ready');
-const leaveRoom = require('./src/Room/Leave');
-const newRoom = require('./src/Room/New');
-const helpMenu = require('./src/Menu/Help');
-const renameMenu = require('./src/Menu/TienIch').rename;
-const renameAction = require('./src/Menu/TienIch').renameAction;
-const infoMenu = require('./src/Menu/TienIch').info;
-const adminMenu = require('./src/Menu/Admin').admin;
-const kickPlayer = require('./src/Menu/Admin').kick;
-const resetAll = require('./src/Menu/Admin').resetAll;
+const loginModule = require("./module/Login").login;
+const logoutModule = require("./module/Login").logout;
+const registerModule = require("./module/Login").register;
 
-module.exports = (gamef, bot, joinID, message) => {
+module.exports = (userInstance, bot, joinID, message) => {
     // JOIN MODULE
-    if (/#join.*/g.test(message)) {
+    if (/#login.*/g.test(message) || message == '#CONNECT') {
+        if (message == '#login') {
+            bot.say(joinID, `#login <tên đăng nhập>\nVD: #login phamngocduy98`)
+        } else {
+            let userID = message.match(/(?<=#login\s).*/g)
+            loginModule(userInstance, bot, joinID, userID);
+        }
+    } else if (/#register.*/g.test(message) || message == '#REGISTER') {
+        if (message == '#register') {
+            bot.say(joinID, `#register <tên đăng nhập>\nVD: #register phamngocduy98`)
+        } else {
+            let userID = message.match(/(?<=#register\s).*/g)
+            registerModule(userInstance, bot, joinID, userID);
+        }
+    } else if (message == '#logout' || message == '#DISCONNECT') {
+        logoutModule(userInstance, bot, joinID);
+    } else if (/#join.*/g.test(message)) {
         if (/#join\s[0-9]+/g.test(message)) { //join room
             joinRoom(gamef, bot, joinID, message.match(/[0-9]+/g));
         } else {

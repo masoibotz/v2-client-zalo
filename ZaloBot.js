@@ -62,7 +62,7 @@ class ZaloBot {
     sendLinkMessage(recipientId, links) {
         var params = {
             uid: recipientId,
-            links: Array.isArray(links)?links: [links]
+            links: Array.isArray(links) ? links : [links]
         }
         return new Promise((resolve, reject) => {
             this.ZOAClient.api('sendmessage/links', 'POST', params, function (response) {
@@ -107,8 +107,10 @@ class ZaloBot {
         if (typeof message === 'string') {
             return this.sendTextMessage(recipientId, message);
         } else {
-            if (message.quickReply) {
-
+            if (message.buttons && message.buttons.length > 0) {
+                return this.sendTextMessage(recipientId, `${message.text}\n${buttons.map(b => `#${b.payload} ${b.title}`).join("\n")}`);
+            } else if (message.quickReply) {
+                return this.sendTextMessage(recipientId, `${message.text}\n${quickReply.join("\n")}`);
             } else if (message.image && message.text) {
                 return this.uploadImage(message.image).then((imageid) => {
                     this.sendImageMessage(recipientId, imageid, message.text);

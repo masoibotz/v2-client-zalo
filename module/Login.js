@@ -1,7 +1,7 @@
 const { postRequest } = require('../src/sendRole');
 
 function login(userInstance, bot, joinID, userID) {
-    userInstance.connectChat(userID, joinID, chat).then(currentUser => {
+    userInstance.connectChat(userID, joinID, bot).then(currentUser => {
         console.log(`Login: ${userID}`);
         bot.say(joinID, {
             text: `Bạn đã đăng nhập thành công!\nHãy tham gia 1 phòng chơi!`,

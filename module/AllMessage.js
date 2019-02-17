@@ -36,27 +36,27 @@ module.exports = async (userInstance, bot, joinID, text) => {
             let actionName = text.match(/[a-z]+/g)[0];
             let playerList = userInstance.getPlayerList(joinID);
             let targetID = Object.keys(playerList)[targetIndex];
-            bot.say(joinID, await handleVoteID(chatInstance, data, userID, targetID, actionName));
+            bot.say(joinID, `${await handleVoteID(chatInstance, data, userID, targetID, actionName)}`);
             return;
         }
         switch (data.state.dayStage) {
             case "cupid": if (/#cupid\s[0-9]+\s[0-9]+/g.test(text)) {
                 let targets = text.match(/[0-9]+/g);
-                bot.say(joinID, await sendCupid(roomID, Object.keys(playerList)[targets[0]], Object.keys(playerList)[targets[1]]));
+                bot.say(joinID, `${await sendCupid(roomID, Object.keys(playerList)[targets[0]], Object.keys(playerList)[targets[1]])}`);
             } break;
             case "superwolf": if (/#0?nguyen/g.test(text)) {
                 let nguyenOrNot = /#nguyen/g.test(text);
-                bot.say(joinID, await sendSuperWolf(roomID, nguyenOrNot ? data.roleInfo.victimID : ""));
+                bot.say(joinID, `${await sendSuperWolf(roomID, nguyenOrNot ? data.roleInfo.victimID : "")}`);
             } break;
             case "witch": if (/#0?cuu/g.test(text)) {
                 let cuuOrNot = /#cuu/g.test(text);
-                bot.say(joinID, await sendWitchSave(roomID, cuuOrNot));
+                bot.say(joinID, `${await sendWitchSave(roomID, cuuOrNot)}`);
             } break;
             case "voteYesNo": if (/#(treo|tha)/g.test(text)) {
                 // treo/tha
                 let treoOrTha = /#treo/g.test(text)
                 let targetID = data.roleInfo.victimID;
-                bot.say(joinID, await handleVoteID(chatInstance, data, userID, treoOrTha ? targetID : ""));
+                bot.say(joinID, `${await handleVoteID(chatInstance, data, userID, treoOrTha ? targetID : "")}`);
             } break;
         }
     } else {
@@ -75,7 +75,7 @@ module.exports = async (userInstance, bot, joinID, text) => {
                 roomId: roomID,
             }).catch(err => {
                 bot.say(joinID, `Không gửi được tin nhắn!\nuser.sendMessage error`);
-                console.log(`user.sendMessage error:`, error.info.error);
+                console.log(`user.sendMessage error: `, error.info.error);
             })
         } else {
             bot.say(joinID, `Bạn không thể gửi tin nhắn!`);

@@ -1,5 +1,5 @@
 const { extractUserRole } = require('./DataUtils');
-const { sendVote, sendSee, sendFire, sendWitchKill } = require('../src/sendRole');
+const { sendVote, sendSee, sendSave, sendFire, sendWitchKill }= require('../src/sendRole');
 
 module.exports = async (chatInstance, gameData, userID, targetID, actionName = "") => {
     var roomID = gameData.roomChatID;
@@ -22,7 +22,7 @@ module.exports = async (chatInstance, gameData, userID, targetID, actionName = "
             }
             switch (userRole) {
                 case "1":
-                    if (gameData.roleTarget.seeID != "") {
+                    if (gameData.roleTarget.seeID == "") {
                         gameData.roleTarget.seeID = targetID;
                         return await sendSee(roomID, gameData, targetID, userID); break;
                     } else {

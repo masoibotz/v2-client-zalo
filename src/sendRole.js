@@ -53,7 +53,7 @@ async function sendSuperWolf(roomID, targetID) {
 }
 async function sendWitchSave(roomID, value = true) {
     console.log(`send WitchSave`);
-    return await sendVoteRequest(roomID, `{"roleTarget.witchUseSave":${value}}`, `Đã cứu!`, `sendWitchSave_error`);
+    return await sendVoteRequest(roomID, `{"roleTarget.witchUseSave":${value}}`, `Đã ${value ? "" : "bỏ "}cứu!`, `sendWitchSave_error`);
 }
 async function sendWitchKill(roomID, targetID) {
     console.log(`send WitchKill ${targetID}`);

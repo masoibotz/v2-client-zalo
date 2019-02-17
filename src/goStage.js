@@ -38,8 +38,8 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
         case 'superwolf':
             if (userRole == -3) {
                 if (gameData.roleInfo.superWolfVictimID == "") {
-                    if (gameData.players.names[victimID] != "") {
-                        bot.say(joinID, `🐺SÓI NGUYỀN\n${gameData.players.names[victimID]} đã chết\n#nguyen để nguyền!\n#0nguyen để bỏ nguyền!`);
+                    if (gameData.roleInfo.victimID != "") {
+                        bot.say(joinID, `🐺SÓI NGUYỀN\n${gameData.players.names[gameData.roleInfo.victimID]} đã chết\n#nguyen để nguyền!\n#0nguyen để bỏ nguyền!`);
                     } else {
                         bot.say(joinID, `🐺SÓI NGUYỀN\nKhông có ai chết cả! Buồn ghê :v`);
                     }

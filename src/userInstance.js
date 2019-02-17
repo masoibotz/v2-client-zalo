@@ -166,12 +166,9 @@ module.exports = class UserInstance {
                             }, {});
                             this.setPlayerList(joinID, playerList); // lưu lại mạng vote
                             if (text != "") {
-                                bot.say(joinID, "```\n" + text + "\n```").then(() => {
-                                    goStage(bot, joinID, data, userID, playerList);
-                                })
-                            } else {
-                                goStage(bot, joinID, data, userID, playerList);
+                                bot.say(joinID, text);
                             }
+                            goStage(bot, joinID, data, userID, playerList);
                         } catch (e) {
                             console.log(e);
                             bot.say(joinID, `MÀN HÌNH XANH HIỆN LÊN\nLiên hệ ngay admin về lỗi này!\nJSON_invalid_error`);

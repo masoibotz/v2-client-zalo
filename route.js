@@ -8,14 +8,14 @@ module.exports = (userInstance, bot, joinID, message) => {
         if (message == '#login') {
             bot.say(joinID, `#login <tên đăng nhập>\nVD: #login phamngocduy98`)
         } else {
-            let userID = message.match(/(?<=#login\s).*/g)
+            let userID = message.match(/(?<=#login\s).*/g)[0];
             loginModule(userInstance, bot, joinID, userID);
         }
     } else if (/#register.*/g.test(message) || message == '#REGISTER') {
         if (message == '#register') {
             bot.say(joinID, `#register <tên đăng nhập>\nVD: #register phamngocduy98`)
         } else {
-            let userID = message.match(/(?<=#register\s).*/g)
+            let userID = message.match(/(?<=#register\s).*/g)[0];
             registerModule(userInstance, bot, joinID, userID);
         }
     } else if (message == '#logout' || message == '#DISCONNECT') {

@@ -36,8 +36,11 @@ module.exports = async (userInstance, bot, joinID, text) => {
             let actionName = text.match(/[a-z]+/g)[0];
             let playerList = userInstance.getPlayerList(joinID);
             let targetID = Object.keys(playerList)[targetIndex];
-            bot.say(joinID, `${await handleVoteID(chatInstance, data, userID, targetID, actionName)}`);
-            return;
+            let result = await handleVoteID(chatInstance, data, userID, targetID, actionName);
+            if (result) {
+                bot.say(joinID, `${result}`);
+                return;
+            }
         }
         switch (data.state.dayStage) {
             case "cupid": if (/#cupid\s[0-9]+\s[0-9]+/g.test(text)) {

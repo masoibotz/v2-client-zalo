@@ -14,7 +14,7 @@ const buttonPayload = {
 
 class ZaloBot {
     constructor() {
-        this.imageCache = [];
+        this.imageCache = {};
         var zaConfig = {
             oaid: '3143856013449793558',
             secretkey: '0DHbJHF76STPd6D2cMd4'

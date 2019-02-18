@@ -137,6 +137,10 @@ class ZaloBot {
                 return this.sendImageMessage(recipientId, message.imageID, message.text);
             } else if (message.stickerID && message.attachment == 'sticker') { //zalo sticker
                 return this.sendStickerMessage(recipientId, message.stickerID);
+            } else if (message.attachment == 'image' && message.url != "") { // send image
+                return this.uploadImage(message.url).then((imageid) => {
+                    this.sendImageMessage(recipientId, imageid, message.text);
+                });
             } else if (message.attachment == 'link') { // send link card
                 return this.sendLinkMessage(recipientId, message.links);
             } else if (Array.isArray(message)) { // multi messages support

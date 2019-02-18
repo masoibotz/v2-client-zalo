@@ -8,6 +8,7 @@ const { JSDOM } = require('jsdom');
 
 // app src import
 const UserInstance = require('./src/userInstance');
+const attachmentMessageModule = require("./module/AttachmentMessage");
 const route = require('./route');
 
 //config
@@ -32,16 +33,18 @@ app.get('/webhook/', function (req, res) {
       route(userInstance, bot, joinID, message);
       break;
     case 'sendstickermsg':
-      bot.say(joinID, `Bot chưa hỗ trợ sticker!`);
+      attachmentMessageModule(userInstance, bot, joinID, "image", req.query.href);
       // attachmentChat(userInstance, bot, joinID, 'sticker', { stickerID: req.query.stickerid });
       break;
     case 'sendimagemsg':
-      bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
+      attachmentMessageModule(userInstance, bot, joinID, "image", req.query.href);
+      // bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
       break;
     case 'sendlinkmsg':
       bot.say(joinID, `Bot chưa hỗ trợ link!`);
       break;
     case 'sendgifmsg':
+      attachmentMessageModule(userInstance, bot, joinID, "image", req.query.href);
       bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
       break;
     default:

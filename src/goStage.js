@@ -44,7 +44,7 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
                         bot.say(joinID, `🐺SÓI NGUYỀN\nKhông có ai chết cả! Buồn ghê :v`);
                     }
                 } else {
-                    bot.say(joinID, `🐺Bạn đã nguyền 1 lần rồi!`);
+                    bot.say(joinID, `🐺SÓI NGUYỀN\nBạn đã nguyền 1 lần rồi!`);
                 }
             } else {
                 bot.say(joinID, `🐺SÓI NGUYỀN đang suy tính...`);

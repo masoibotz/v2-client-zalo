@@ -9,11 +9,12 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
     let coupleIndex = coupleID.indexOf(userID);
     switch (gameData.state.dayStage) {
         case 'readyToGame':
-            bot.say(joinID, `#\n# Bạn là ${roleName[userRole]}\n#`);
-            // bot.say(joinID, {
-            //     text: roleName[userRole],
-            //     image: roleImage[userRole]
-            // })
+            bot.say(joinID, {
+                text: roleName[userRole],
+                attachment: "image",
+                url: roleImage[userRole]
+            })
+            // bot.say(joinID, `#\n# Bạn là ${roleName[userRole]}\n#`);
             break;
         case 'cupid':
             if (userRole == 7) {

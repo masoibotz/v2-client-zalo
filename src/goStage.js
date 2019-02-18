@@ -70,7 +70,7 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
             // notifyDeath += gameData.roleInfo.lastDeath.length === 0 ? `Đêm qua không ai chết cả` : gameData.roleInfo.lastDeath.map((deathID) => {
             //     return `⚔${names[deathID]} đã chết`;
             // }).join('\n');
-            bot.say(joinID, notifyDeath);
+            bot.say(joinID, `${notifyDeath}`);
             break;
         case 'vote':
             bot.say(joinID, {

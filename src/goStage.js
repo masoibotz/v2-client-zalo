@@ -74,7 +74,7 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
             break;
         case 'vote':
             bot.say(joinID, {
-                text: `VOTE\nBạn muốn treo cổ ai?`,
+                text: `VOTE\n#vote <người>\nVD: #vote 0`,
                 quickReplies: Object.values(playerList),
             });
             break;

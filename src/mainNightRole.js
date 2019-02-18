@@ -43,15 +43,20 @@ function doWitchRole(bot, joinID, roomID, gameData, playerList) {
     let victimID = gameData.roleInfo.victimID;
     let sayArr = [];
     if (victimID != "" && gameData.roleInfo.witchSaveRemain) {
-        sayArr = [...sayArr, `PHÙ THỦY\n${gameData.players.names[victimID]} đã chết\n#cuu để cứu\n#0cuu để bỏ cứu!`];
+        sayArr = [...sayArr, `🧙‍PHÙ THỦY\n${gameData.players.names[victimID]} đã chết\n#cuu để cứu\n#0cuu để bỏ cứu!`];
     }
     if (gameData.roleInfo.witchKillRemain) {
         sayArr = [...sayArr, {
-            text: `PHÙ THỦY\n#giet <người> để giết!\nĐợi hết giờ để bỏ giết!`,
+            text: `🧙‍PHÙ THỦY\n#giet <người> để giết!\nVD: #giet 4\nĐợi hết giờ để không giết!`,
             quickReplies: Object.values(playerList)
         }]
     }
-    bot.say(joinID, sayArr);
+    if (sayArr.length > 0) {
+        bot.say(joinID, sayArr);
+    } else {
+        bot.say(joinID, `🧙‍PHÙ THỦY\nBạn đã hết quyền năng!`);
+    }
+
 }
 
 module.exports = {

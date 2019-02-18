@@ -166,7 +166,7 @@ module.exports = class UserInstance {
                             }, {});
                             this.setPlayerList(joinID, playerList); // lưu lại mạng vote
                             if (text != "") {
-                                bot.say(joinID, text);
+                                bot.say(joinID, `#THÔNG BÁO:\n`);
                             }
                             goStage(bot, joinID, data, userID, playerList);
                         } catch (e) {

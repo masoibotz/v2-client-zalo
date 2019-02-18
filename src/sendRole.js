@@ -49,7 +49,7 @@ async function sendCupid(roomID, target1ID, target2ID) {
 }
 async function sendSuperWolf(roomID, targetID) {
     console.log(`SEND SUPERWOLF ${targetID}`);
-    return await sendVoteRequest(roomID, `{"roleTarget.superWolfVictimID":"${targetID}"}`, `Đã nguyền!`, `sendSuperWolf_error`);
+    return await sendVoteRequest(roomID, `{"roleTarget.superWolfVictimID":"${targetID}"}`, `Đã ${targetID ? "" : "bỏ "}nguyền!`, `sendSuperWolf_error`);
 }
 async function sendWitchSave(roomID, value = true) {
     console.log(`send WitchSave`);

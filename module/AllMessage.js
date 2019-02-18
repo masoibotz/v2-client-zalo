@@ -30,11 +30,11 @@ module.exports = async (userInstance, bot, joinID, text) => {
     }
     // main
     if (data && data.state.status == 'ingame') {
+        var playerList = userInstance.getPlayerList(joinID);
         if (/[0-9]+:.+|-1/g.test(text) || /#[a-z]+\s[0-9]+|-1/g.test(text)) {
             // target_id
             let targetIndex = text.match(/[0-9]+/g)[0];
             let actionName = text.match(/[a-z]+/g)[0];
-            let playerList = userInstance.getPlayerList(joinID);
             let targetID = Object.keys(playerList)[targetIndex];
             let result = await handleVoteID(chatInstance, data, userID, targetID, actionName);
             if (result) {

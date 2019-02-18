@@ -24,7 +24,7 @@ const bot = new ZaloBot();
 const userInstance = new UserInstance();
 
 app.get('/webhook/', function (req, res) {
-  //console.log(req.query);
+  console.log("query=", req.query);
   let message = req.query.message;
   let joinID = req.query.fromuid;
   switch (req.query.event) {
@@ -32,18 +32,14 @@ app.get('/webhook/', function (req, res) {
       route(userInstance, bot, joinID, message);
       break;
     case 'sendstickermsg':
-      attachmentChat(userInstance, bot, joinID, 'sticker', { stickerID: req.query.stickerid });
+      bot.say(joinID, `Bot chưa hỗ trợ sticker!`);
+      // attachmentChat(userInstance, bot, joinID, 'sticker', { stickerID: req.query.stickerid });
       break;
     case 'sendimagemsg':
       bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
       break;
     case 'sendlinkmsg':
-      attachmentChat(userInstance, bot, joinID, 'link', {
-        link: req.query.href,
-        linktitle: req.query.message != '' ? req.query.message : 'Bot đã gửi liên kết',
-        linkdes: req.query.description != '' ? req.query.description : 'Bấm vào để mở liên kết',
-        linkthumb: req.query.thumb
-      });
+      bot.say(joinID, `Bot chưa hỗ trợ link!`);
       break;
     case 'sendgifmsg':
       bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);

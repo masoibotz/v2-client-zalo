@@ -170,8 +170,9 @@ module.exports = class UserInstance {
                                 bot.say(joinID, `${text}`).then(() => {
                                     goStage(bot, joinID, data, userID, playerList);
                                 })
+                            } else {
+                                goStage(bot, joinID, data, userID, playerList);
                             }
-                            goStage(bot, joinID, data, userID, playerList);
                         } catch (e) {
                             console.log(e);
                             bot.say(joinID, `MÀN HÌNH XANH HIỆN LÊN\nLiên hệ ngay admin về lỗi này!\nJSON_invalid_error`);

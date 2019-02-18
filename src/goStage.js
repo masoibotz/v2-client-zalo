@@ -9,6 +9,7 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
     let coupleIndex = coupleID.indexOf(userID);
     switch (gameData.state.dayStage) {
         case 'readyToGame':
+            bot.say(joinID, roleName[userRole]);
             // bot.say(joinID, {
             //     text: roleName[userRole],
             //     image: roleImage[userRole]

@@ -95,10 +95,13 @@ module.exports = class UserInstance {
             if (message.attachment && message.attachment.type && message.attachment.link) {
                 // attachment
                 console.log(`${message.sender.name}: attachment`);
-                bot.say(joinID, [`${this.timeLeftToString(timeLeft)}${message.sender.name} đã gửi một file đính kèm`, {
-                    attachment: message.attachment.type,
-                    url: message.attachment.link
-                }])
+                if (message.attachment.type == "image") {
+                    bot.say(joinID, {
+                        text: `${this.timeLeftToString(timeLeft)}${message.sender.name} đã gửi `,
+                        attachment: "image",
+                        url: message.attachment.link
+                    })
+                }
             } else {
                 // text
                 console.log(`${message.sender.name}: ${message.text}`);

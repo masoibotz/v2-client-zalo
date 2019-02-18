@@ -13,6 +13,7 @@ const voteModule = require("./module/Room").vote;
 const allMessageModule = require("./module/AllMessage");
 // Extension
 const downloadAppModule = require("./module/Extension").downloadApk;
+const setupRoomModule = require("./module/Extension").setupGame;
 
 module.exports = (userInstance, bot, joinID, message) => {
     // JOIN MODULE
@@ -45,7 +46,11 @@ module.exports = (userInstance, bot, joinID, message) => {
             case "#logout": console.log("LOGOUT ROUTE"); logoutModule(userInstance, bot, joinID); break;
             case "#leave": console.log("LEAVE ROUTE"); leaveModule(userInstance, bot, joinID); break;
             case '#ready': console.log("READY ROUTE"); readyModule(userInstance, bot, joinID); break;
-            case '#start': console.log("START ROUTE"); startRoomModule(userInstance, bot, joinID); break;
+            case "#start": console.log("START ROUTE");
+                bot.say(joinID, `Chọn cách set-up vai trò\n_______________\n#autostart Tự động\n#setup Thủ công`);
+                break;
+            case '#autostart': console.log("AUTOSTART ROUTE"); startRoomModule(userInstance, bot, joinID); break;
+            case '#setup': console.log("SETUP ROUTE"); setupRoomModule(userInstance, bot, joinID); break;
             case '#new': console.log("NEW ROUTE"); bot.say(joinID, `Tính năng thêm phòng chưa sẵn sàng!`); break;
             case '#kick': console.log("KICK ROUTE"); bot.say(joinID, `Tính năng kick người chơi đang trong quá trình nghiên cứu!`); break; // regexp: /\/kick.[0-9]+.[0-9]+/g
             case '#download': console.log("DOWNLOAD ROUTE"); downloadAppModule(bot, joinID); break;

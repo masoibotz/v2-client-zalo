@@ -37,20 +37,20 @@ const roleName = {
 }
 const roleImage = {
     // PHE SÓI
-    "-1": 'http://hstatic.net/936/1000019936/10/2015/7-28/masoi.jpg',
-    "-2": 'http://hstatic.net/936/1000019936/10/2015/7-28/phanboi.jpg',
-    "-3": 'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg',
+    "-1": 'https://sites.google.com/site/masoibot/vai-tro/masoi.jpg',
+    "-2": 'https://sites.google.com/site/masoibot/vai-tro/phanboi.jpg',
+    "-3": 'https://sites.google.com/site/masoibot/vai-tro/soinguyen.jpg',
 
     // PHE DÂN
-    "1": 'http://hstatic.net/936/1000019936/10/2015/11-18/tien-tri.jpg',
-    "2": 'http://hstatic.net/936/1000019936/10/2015/7-28/baove.jpg',
-    "3": 'http://hstatic.net/936/1000019936/10/2015/7-28/thosan.jpg',
-    "4": 'http://hstatic.net/936/1000019936/10/2015/7-28/danlang.jpg',
-    "5": 'http://hstatic.net/936/1000019936/10/2015/7-28/phuthuy.jpg',
-    "6": 'http://hstatic.net/936/1000019936/10/2015/7-28/gialang.jpg',
-    "7": 'http://hstatic.net/936/1000019936/10/2015/7-28/cupid.jpg',
-    "8": 'https://scontent.fhan2-4.fna.fbcdn.net/v/t1.0-9/39169487_1891874787774904_4152750801296556032_n.png?_nc_cat=104&_nc_oc=AQmA2DI_V8Fc8BO1-a_IN4sPTyG9Ib2g0IKinTt82Lk1FOHCCcXoRn2v2P4HCoZ_17k&_nc_ht=scontent.fhan2-4.fna&oh=6ca2fc02030867f433a9a0d7b19efac9&oe=5D24912F',
-    "9": 'https://scontent.fhan2-4.fna.fbcdn.net/v/t1.0-9/40290177_1903763683252681_3340783201013465088_n.jpg?_nc_cat=105&_nc_oc=AQlArfRa8KkCNdP1WbYj4XOdf2kphfLxmsPz-fqxZf7hSQdIm0Rdkr7RDlgT0ylgUs4&_nc_ht=scontent.fhan2-4.fna&oh=4a8cf5c06b8266f27d3209be1263fdae&oe=5D28DB19',
+    "1": 'https://sites.google.com/site/masoibot/vai-tro/tien-tri.jpg',
+    "2": 'https://sites.google.com/site/masoibot/vai-tro/baove.jpg',
+    "3": 'https://sites.google.com/site/masoibot/vai-tro/thosan.jpg',
+    "4": 'https://sites.google.com/site/masoibot/vai-tro/danlang.jpg',
+    "5": 'https://sites.google.com/site/masoibot/vai-tro/phuthuy.jpg',
+    "6": 'https://sites.google.com/site/masoibot/vai-tro/gialang.jpg',
+    "7": 'https://sites.google.com/site/masoibot/vai-tro/cupid.jpg',
+    "8": 'https://sites.google.com/site/masoibot/vai-tro/nguoi%20hoa%20soi.jpg',
+    "9": 'https://sites.google.com/site/masoibot/vai-tro/thienSu.jpg',
 }
 const phe = {
     "9": "Thiên sứ",

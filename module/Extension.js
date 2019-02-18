@@ -6,7 +6,17 @@ function downloadApk(bot, joinID) {
         linkthumb: "https://sites.google.com/site/masoibot/user/MaSoiLogo.png"
     });
 };
+function setupGame(userInstance, bot, joinID) {
+    var roomID = userInstance.getRoomID(joinID);
+    bot.sendLinkMessage(joinID, {
+        link: `https://phamngocduy98.github.io/masoibot/setup?roomID=${roomID}`,
+        linktitle: 'Ma sói Setup',
+        linkdes: `Set-up vai trò bằng tay`,
+        linkthumb: "https://sites.google.com/site/masoibot/user/MaSoiLogo.png"
+    });
+};
 
 module.exports = {
-    downloadApk: downloadApk
+    downloadApk: downloadApk,
+    setupGame: setupGame
 }

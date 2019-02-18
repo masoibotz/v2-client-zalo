@@ -125,7 +125,7 @@ class ZaloBot {
         if (typeof message === 'string') {
             return this.sendTextMessage(recipientId, message);
         } else {
-            if (message.buttons && message.buttons.length > 0) {// buttons
+            if (message.buttons && message.buttons.length > 0 && message.text) {// buttons
                 return this.sendTextMessage(recipientId, `${message.text}\n__________________\n${message.buttons.map(b => `#${buttonPayload[b.payload]} ${b.title}`).join("\n")}`);
             } else if (message.quickReplies) { // quickReplies
                 return this.sendTextMessage(recipientId, `${message.text}\n${message.quickReplies.join("\n")}`);
@@ -141,6 +141,12 @@ class ZaloBot {
                 // return this.uploadImage(message.url).then((imageid) => {
                 //     this.sendImageMessage(recipientId, imageid, message.text);
                 // });
+                return this.sendLinkMessage(recipientId, {
+                    link: message.url,
+                    linktitle: `${message.text}`,
+                    linkdes: `${message.text} hình ảnh/sticker`,
+                    linkthumb: message.url
+                });
             } else if (message.attachment == 'link') { // send link card
                 return this.sendLinkMessage(recipientId, message.links);
             } else if (Array.isArray(message)) { // multi messages support

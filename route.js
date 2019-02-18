@@ -47,7 +47,6 @@ module.exports = (userInstance, bot, joinID, message) => {
             case '#ready': console.log("READY ROUTE"); readyModule(userInstance, bot, joinID); break;
             case '#start': console.log("START ROUTE"); startRoomModule(userInstance, bot, joinID); break;
             case '#new': console.log("NEW ROUTE"); bot.say(joinID, `Tính năng thêm phòng chưa sẵn sàng!`); break;
-            case '#help': console.log("HELP ROUTE"); bot.say(joinID, `Trợ giúp chưa được viết xong :v`); break;
             case '#kick': console.log("KICK ROUTE"); bot.say(joinID, `Tính năng kick người chơi đang trong quá trình nghiên cứu!`); break; // regexp: /\/kick.[0-9]+.[0-9]+/g
             case '#download': console.log("DOWNLOAD ROUTE"); downloadAppModule(bot, joinID); break;
             case '#help': console.log("HELP ROUTE");

@@ -25,7 +25,7 @@ const bot = new ZaloBot();
 const userInstance = new UserInstance();
 
 app.get('/webhook/', function (req, res) {
-  console.log("query=", req.query);
+  // console.log("query=", req.query);
   let message = req.query.message;
   let joinID = req.query.fromuid;
   switch (req.query.event) {
@@ -45,7 +45,7 @@ app.get('/webhook/', function (req, res) {
       break;
     case 'sendgifmsg':
       attachmentMessageModule(userInstance, bot, joinID, "image", req.query.href);
-      bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
+      // bot.say(joinID, `Bạn không thể gửi ảnh do Zalo giới hạn số lượng ảnh bot được gửi mỗi ngày!`);
       break;
     default:
       bot.say(joinID, `Bạn đã gửi nội dung không được hỗ trợ!`);

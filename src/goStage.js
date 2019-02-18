@@ -9,7 +9,7 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
     let coupleIndex = coupleID.indexOf(userID);
     switch (gameData.state.dayStage) {
         case 'readyToGame':
-            bot.say(joinID, roleName[userRole]);
+            bot.say(joinID, `#\n# Bạn là ${roleName[userRole]}\n#`);
             // bot.say(joinID, {
             //     text: roleName[userRole],
             //     image: roleImage[userRole]
@@ -59,19 +59,19 @@ module.exports = function goStage(bot, joinID, gameData, userID, playerList) {
             }
             break;
         case 'discuss':
-            let notifyDeath = ``;
-            // let notifyDeath = `☀TRỜI SÁNG RỒI!\n`;
-            let superWolfVictimID = gameData.roleInfo.superWolfVictimID;
-            if (superWolfVictimID === userID) {
-                notifyDeath += `🐺Nhớ rằng bạn là sói!\n`
-            }
-            if (coupleIndex != -1) {
-                notifyDeath += `💕Bạn cặp đôi với ${names[coupleID[coupleIndex == 1 ? 0 : 1]]}\n`;
-            }
-            // notifyDeath += gameData.roleInfo.lastDeath.length === 0 ? `Đêm qua không ai chết cả` : gameData.roleInfo.lastDeath.map((deathID) => {
-            //     return `⚔${names[deathID]} đã chết`;
-            // }).join('\n');
-            bot.say(joinID, `${notifyDeath}`);
+            // let notifyDeath = ``;
+            // // let notifyDeath = `☀TRỜI SÁNG RỒI!\n`;
+            // let superWolfVictimID = gameData.roleInfo.superWolfVictimID;
+            // if (superWolfVictimID === userID) {
+            //     notifyDeath += `🐺Nhớ rằng bạn là sói!\n`
+            // }
+            // if (coupleIndex != -1) {
+            //     notifyDeath += `💕Bạn cặp đôi với ${names[coupleID[coupleIndex == 1 ? 0 : 1]]}\n`;
+            // }
+            // // notifyDeath += gameData.roleInfo.lastDeath.length === 0 ? `Đêm qua không ai chết cả` : gameData.roleInfo.lastDeath.map((deathID) => {
+            // //     return `⚔${names[deathID]} đã chết`;
+            // // }).join('\n');
+            // bot.say(joinID, `${notifyDeath}`);
             break;
         case 'vote':
             bot.say(joinID, {
